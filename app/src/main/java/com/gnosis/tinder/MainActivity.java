@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentUId;
 
     private DatabaseReference usersDb;
-
+//test for commit
 
     ListView listView;
     List<cards> rowItems;
