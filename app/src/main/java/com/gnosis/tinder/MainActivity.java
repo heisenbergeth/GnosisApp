@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference usersDb;
 
-
     ListView listView;
     List<cards> rowItems;
 
