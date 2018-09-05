@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "141330968528",
+    "firebase_url": "https://gnosis-044.firebaseio.com",
+    "project_id": "gnosis-044",
+    "storage_bucket": "gnosis-044.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141330968528:android:e8fb3ad9e09ca008",
+        "android_client_info": {
+          "package_name": "com.gnosis.tinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141330968528-3po42m0h234v3r4efi02ltk53vk7b087.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACeTsuuzxZCqndwvCJPRRD4hgH-tqVln8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
