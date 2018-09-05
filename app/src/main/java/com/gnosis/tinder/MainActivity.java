@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentUId;
 
     private DatabaseReference usersDb;
-//test for commit
+
 
     ListView listView;
     List<cards> rowItems;
@@ -207,5 +207,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
         startActivity(intent);
         return;
+
+        //Test commit
     }
 }
