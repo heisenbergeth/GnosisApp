@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,8 +59,11 @@ public class LoginActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "sign in error", Toast.LENGTH_SHORT).show();
+
+                        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                            Toast.makeText(LoginActivity.this, "Input error", Toast.LENGTH_SHORT).show();
+                        } else if(!task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Sign-in error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
