@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+//test macos
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -54,19 +54,26 @@ public class LoginActivity extends AppCompatActivity {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = mEmail.getText().toString();
-                final String password = mPassword.getText().toString();
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!TextUtils.isEmpty(mEmail.getText().toString()) && !TextUtils.isEmpty(mPassword.getText().toString())) {
 
-                        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                            Toast.makeText(LoginActivity.this, "Input error", Toast.LENGTH_SHORT).show();
-                        } else if(!task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Sign-in error", Toast.LENGTH_SHORT).show();
+                    final String email = mEmail.getText().toString();
+                    final String password = mPassword.getText().toString();
+
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Sign in error", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-                    }
-                });
+                    });
+                }
+                else
+                Toast.makeText(LoginActivity.this, "Input error", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
