@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,14 +23,14 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView.Adapter mMatchesAdapter;
     private RecyclerView.LayoutManager mMatchesLayoutManager;
 
-    private String cusrrentUserID;
+    private String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
 
-        cusrrentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -43,13 +44,11 @@ public class MatchesActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
     private void getUserMatchId() {
 
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(cusrrentUserID).child("connections").child("matches");
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches");
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
