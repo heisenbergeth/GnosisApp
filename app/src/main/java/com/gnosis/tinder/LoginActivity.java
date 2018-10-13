@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -76,6 +81,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //back button
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+
+        if (id== android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
