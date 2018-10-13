@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Tinder</string>
+
+<string-array name="country_arrays">
+    <item></item>
+    <item>CvSU Silang</item>
+    <item>CvSU Indang</item>
+    <item>CvSU Carmona</item>
+</string-array>
+
 </resources>

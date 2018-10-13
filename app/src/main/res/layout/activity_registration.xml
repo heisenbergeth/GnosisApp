@@ -12,16 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:hint="Name" />
+        android:layout_marginTop="35dp"
+        android:hint="Name"
+        android:singleLine="true" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="301dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="157dp">
+        android:layout_centerInParent="true">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -40,8 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="127dp"
-        android:hint="Email" />
+        android:layout_marginTop="90dp"
+        android:hint="Email"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/password"
@@ -49,9 +49,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="147dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"/>
 
     <Button
         android:id="@+id/register"
@@ -68,6 +70,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/name"
-        android:layout_marginBottom="232dp"
+        android:layout_marginBottom="184dp"
+        android:text="School" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/name"
+        android:layout_marginTop="209dp"
         android:text="Gender" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/name"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="-184dp"
+        android:entries="@array/country_arrays" />
+
+
 </RelativeLayout>
