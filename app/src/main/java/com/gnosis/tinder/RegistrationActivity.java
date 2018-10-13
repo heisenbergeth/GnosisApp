@@ -44,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
-    private Spinner mSpinner;
+    private Spinner mSpinner1, mSpinner2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
         mName = (EditText) findViewById(R.id.name);
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
-        mSpinner = (Spinner) findViewById(R.id.spinner1);
-
+        mSpinner1 = (Spinner) findViewById(R.id.spinner1);
+        mSpinner2 = (Spinner) findViewById(R.id.spinner2);
 
         //Dismiss keyboard after enter key on password
         mPassword.setOnEditorActionListener(new OnEditorActionListener() {
@@ -101,12 +101,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
                 final String name = mName.getText().toString();
-                final String school= mSpinner.getSelectedItem().toString();
+                final String school= mSpinner1.getSelectedItem().toString();
+                final String course= mSpinner2.getSelectedItem().toString();
 
                 //if fields are empty
                 if (TextUtils.isEmpty(mEmail.getText().toString()) || TextUtils.isEmpty(mPassword.getText().toString())
-                        || TextUtils.isEmpty(mName.getText().toString()) || TextUtils.isEmpty((mSpinner.getSelectedItem().toString())) ||
-                        mRadioGroup.getCheckedRadioButtonId()==-1) {
+                        || TextUtils.isEmpty(mName.getText().toString()) || TextUtils.isEmpty((mSpinner1.getSelectedItem().toString()))
+                        || TextUtils.isEmpty((mSpinner2.getSelectedItem().toString())) ||mRadioGroup.getCheckedRadioButtonId()==-1) {
                     Toast.makeText(RegistrationActivity.this, "Input error", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -135,6 +136,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                 userInfo.put("sex", radioButton.getText().toString());
                                 userInfo.put("profileImageUrl", "default");
                                 userInfo.put("school", school);
+                                userInfo.put("course", course);
+
                                 currentUserDb.updateChildren(userInfo);
 
                                 Toast.makeText(RegistrationActivity.this,

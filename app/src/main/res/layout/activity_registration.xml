@@ -61,11 +61,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="25dp"
         android:text="Register" />
 
     <TextView
         android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/name"
+        android:layout_marginBottom="128dp"
+        android:text="Course" />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -86,10 +95,19 @@
         android:id="@+id/spinner1"
         android:layout_width="301dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/name"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="-184dp"
-        android:entries="@array/country_arrays" />
+        android:entries="@array/schools_list" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-128dp"
+        android:entries="@array/course_list" />
 
 
 </RelativeLayout>

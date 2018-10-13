@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">Tinder</string>
 
-<string-array name="country_arrays">
+    <string-array name="schools_list">
     <item></item>
     <item>CvSU Silang</item>
     <item>CvSU Indang</item>
     <item>CvSU Carmona</item>
-</string-array>
+    </string-array>
+
+    <string-array name="course_list">
+        <item></item>
+        <item>BSIT</item>
+        <item>BSCS</item>
+        <item>BSECE</item>
+    </string-array>
 
 </resources>
