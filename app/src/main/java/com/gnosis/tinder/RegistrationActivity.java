@@ -142,7 +142,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 Toast.makeText(RegistrationActivity.this,
                                         "Registration Successful.", Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     });

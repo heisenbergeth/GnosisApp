@@ -10,9 +10,9 @@
 
     <string-array name="course_list">
         <item></item>
-        <item>BSIT</item>
-        <item>BSCS</item>
-        <item>BSECE</item>
+        <item>BS Information Technology</item>
+        <item>BS Computer Science</item>
+        <item>BS Electronics Engineer</item>
     </string-array>
 
 </resources>

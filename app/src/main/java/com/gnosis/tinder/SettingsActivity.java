@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +36,7 @@ import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private EditText mNameField, mPhoneField;
+    private EditText mNameField, mPhoneField, mSchool, mCourse;
 
     private Button mBack, mConfirm;
 
@@ -44,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
 
-    private String userId, name, phone, profileImageUrl, userSex;
+    private String userId, name, phone, profileImageUrl, userSex, school, course;
 
     private Uri resultUri;
 
@@ -54,7 +55,11 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         mNameField = (EditText) findViewById(R.id.name);
-        mPhoneField = (EditText) findViewById(R.id.phone);
+        mPhoneField = (EditText) findViewById(R.id.phone2);
+
+        mSchool = (EditText) findViewById(R.id.school);
+        mCourse = (EditText) findViewById(R.id.course);
+
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
 
@@ -109,6 +114,14 @@ public class SettingsActivity extends AppCompatActivity {
                     if(map.get("sex")!=null){
                         userSex = map.get("sex").toString();
                     }
+                    if(map.get("school")!=null){
+                        school=map.get("school").toString();
+                        mSchool.setText(school);
+                    }
+                    if(map.get("course")!=null){
+                        course=map.get("course").toString();
+                        mCourse.setText(course);
+                    }
                     Glide.clear(mProfileImage);
                     if(map.get("profileImageUrl")!=null){
                         profileImageUrl = map.get("profileImageUrl").toString();
@@ -135,10 +148,14 @@ public class SettingsActivity extends AppCompatActivity {
     private void saveUserInformation() {
         name = mNameField.getText().toString();
         phone = mPhoneField.getText().toString();
+        school = mSchool.getText().toString();
+        course = mCourse.getText().toString();
 
         Map userInfo = new HashMap();
         userInfo.put("name", name);
         userInfo.put("phone", phone);
+        userInfo.put("school", school);
+        userInfo.put("course", course);
         mUserDatabase.updateChildren(userInfo);
         if(resultUri != null){
             StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
