@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Chat;
+package com.gnosis.app.Chat;
 
 /**
  * Created by manel on 10/31/2017.

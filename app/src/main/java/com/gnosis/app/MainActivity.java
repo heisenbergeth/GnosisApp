@@ -1,4 +1,4 @@
-package com.gnosis.tinder;
+package com.gnosis.app;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +17,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.gnosis.tinder.Cards.arrayAdapter;
-import com.gnosis.tinder.Cards.cards;
-import com.gnosis.tinder.Matches.MatchesActivity;
+import com.gnosis.app.Cards.arrayAdapter;
+import com.gnosis.app.Cards.cards;
+import com.gnosis.app.Matches.MatchesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
-    private com.gnosis.tinder.Cards.arrayAdapter arrayAdapter;
+    private com.gnosis.app.Cards.arrayAdapter arrayAdapter;
     private int i;
 
     private FirebaseAuth mAuth;

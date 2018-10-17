@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Matches;
+package com.gnosis.app.Matches;
 
 /**
  * Created by manel on 10/31/2017.

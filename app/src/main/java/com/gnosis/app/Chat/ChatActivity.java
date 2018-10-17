@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Chat;
+package com.gnosis.app.Chat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.gnosis.tinder.Matches.MatchesActivity;
-import com.gnosis.tinder.Matches.MatchesAdapter;
-import com.gnosis.tinder.Matches.MatchesObject;
-import com.gnosis.tinder.R;
+import com.gnosis.app.Matches.MatchesActivity;
+import com.gnosis.app.Matches.MatchesAdapter;
+import com.gnosis.app.Matches.MatchesObject;
+import com.gnosis.app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

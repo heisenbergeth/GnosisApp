@@ -1,4 +1,4 @@
-package com.gnosis.tinder;
+package com.gnosis.app;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Chat;
+package com.gnosis.app.Chat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gnosis.tinder.R;
+import com.gnosis.app.R;
 
 /**
  * Created by manel on 10/31/2017.

@@ -1,4 +1,4 @@
-package com.gnosis.tinder;
+package com.gnosis.app;
 
 import org.junit.Test;
 

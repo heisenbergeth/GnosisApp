@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Chat;
+package com.gnosis.app.Chat;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.gnosis.tinder.R;
+import com.gnosis.app.R;
 
 import java.util.List;
 

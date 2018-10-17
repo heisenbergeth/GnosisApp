@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Cards;
+package com.gnosis.app.Cards;
 
 /**
  * Created by manel on 9/5/2017.

@@ -1,4 +1,4 @@
-package com.gnosis.tinder;
+package com.gnosis.app;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

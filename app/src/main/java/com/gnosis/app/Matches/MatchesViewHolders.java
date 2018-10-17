@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Matches;
+package com.gnosis.app.Matches;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gnosis.tinder.Chat.ChatActivity;
-import com.gnosis.tinder.R;
+import com.gnosis.app.Chat.ChatActivity;
+import com.gnosis.app.R;
 
 /**
  * Created by manel on 10/31/2017.

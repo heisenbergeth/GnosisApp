@@ -1,4 +1,4 @@
-package com.gnosis.tinder.Matches;
+package com.gnosis.app.Matches;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.gnosis.tinder.R;
+import com.gnosis.app.R;
 
 import java.util.List;
 
