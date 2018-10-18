@@ -36,7 +36,7 @@ public class arrayAdapter extends ArrayAdapter<cards>{
 
         name.setText(card_item.getName());
         switch(card_item.getProfileImageUrl()){
-            case "default":
+            case "default": //default profile picture
                 Glide.with(convertView.getContext()).load(R.mipmap.ic_launcher).into(image);
                 break;
             default:
