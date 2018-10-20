@@ -108,7 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(mEmail.getText().toString()) || TextUtils.isEmpty(mPassword.getText().toString())
                         || TextUtils.isEmpty(mName.getText().toString()) || TextUtils.isEmpty((mSpinner1.getSelectedItem().toString()))
                         || TextUtils.isEmpty((mSpinner2.getSelectedItem().toString())) ||mRadioGroup.getCheckedRadioButtonId()==-1) {
-                    Toast.makeText(RegistrationActivity.this, "Input error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Input error. Please complete all the fields.", Toast.LENGTH_LONG).show();
                 }
                 else {
 
@@ -133,7 +133,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                                 Map userInfo = new HashMap<>();
                                 userInfo.put("name", name);
-                                userInfo.put("sex", radioButton.getText().toString());
+                                userInfo.put("type", radioButton.getText().toString());
                                 userInfo.put("profileImageUrl", "default");
                                 userInfo.put("school", school);
                                 userInfo.put("course", course);
