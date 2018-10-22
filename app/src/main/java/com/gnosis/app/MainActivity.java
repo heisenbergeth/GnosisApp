@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 pedeng matawag pag kinukuha na yung mga suggestion na match (sana) XD */
 
                 usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
-                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Match dismissed.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 isConnectionMatch(userId);
-                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Added to match list", Toast.LENGTH_SHORT).show();
             }
 
             @Override

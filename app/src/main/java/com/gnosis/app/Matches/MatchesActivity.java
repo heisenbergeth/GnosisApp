@@ -57,6 +57,9 @@ public class MatchesActivity extends AppCompatActivity {
                         FetchMatchInformation(match.getKey());
                     }
                 }
+                else{
+                    Toast.makeText(MatchesActivity.this, "No matches found.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -86,6 +89,9 @@ public class MatchesActivity extends AppCompatActivity {
                     MatchesObject obj = new MatchesObject(userId, name, profileImageUrl);
                     resultsMatches.add(obj);
                     mMatchesAdapter.notifyDataSetChanged();
+                }
+                else{
+                    Toast.makeText(MatchesActivity.this, "No matches found.", Toast.LENGTH_SHORT).show();
                 }
             }
 
