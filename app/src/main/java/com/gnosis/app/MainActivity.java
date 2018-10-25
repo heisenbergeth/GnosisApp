@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String currentUId;
 
+    private TextView textView;
+
     private DatabaseReference usersDb;
 
     ListView listView;
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkUserType();
 
+
+        textView = (TextView) findViewById(R.id.instruction);
         rowItems = new ArrayList<cards>();
 
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
@@ -58,12 +63,14 @@ public class MainActivity extends AppCompatActivity {
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
         flingContainer.setAdapter(arrayAdapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 Log.d("LIST", "removed object!");
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
+                textView.setVisibility(View.GONE);
 
             }
 
@@ -174,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
                         if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
                             profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                         }
+
+                        //connection sa database nung cards
                         cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), dataSnapshot.child("school").getValue().toString(),  profileImageUrl);
                         rowItems.add(item);
                         arrayAdapter.notifyDataSetChanged();
