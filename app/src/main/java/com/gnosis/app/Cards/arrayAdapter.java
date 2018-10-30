@@ -32,12 +32,14 @@ public class arrayAdapter extends ArrayAdapter<cards>{
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView school = (TextView) convertView.findViewById(R.id.school1);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
         name.setText(card_item.getName());
+        school.setText(card_item.getSchool());
         switch(card_item.getProfileImageUrl()){
             case "default": //default profile picture
-                Glide.with(convertView.getContext()).load(R.mipmap.ic_launcher).into(image);
+                Glide.with(convertView.getContext()).load(R.mipmap.default_pic).into(image);
                 break;
             default:
                 Glide.clear(image);

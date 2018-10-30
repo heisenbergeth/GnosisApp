@@ -7,10 +7,14 @@ package com.gnosis.app.Cards;
 public class cards {
     private String userId;
     private String name;
+    private String school;
     private String profileImageUrl;
-    public cards (String userId, String name, String profileImageUrl){
+
+
+    public cards (String userId, String name, String school, String profileImageUrl){
         this.userId = userId;
         this.name = name;
+        this.school=school;
         this.profileImageUrl = profileImageUrl;
     }
 
@@ -26,6 +30,13 @@ public class cards {
     }
     public void setName(String name){
         this.name = name;
+    }
+
+    public String getSchool(){
+        return school;
+    }
+    public void setSchool(String school){
+        this.school = school;
     }
 
     public String getProfileImageUrl(){

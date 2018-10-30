@@ -57,6 +57,9 @@ public class MatchesActivity extends AppCompatActivity {
                         FetchMatchInformation(match.getKey());
                     }
                 }
+                else{
+                    Toast.makeText(MatchesActivity.this, "No matches found.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
