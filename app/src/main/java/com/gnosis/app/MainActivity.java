@@ -214,8 +214,9 @@ public class MainActivity extends AppCompatActivity {
         return;
     }
 
-    public void goToSettings(View view) {
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+
+    public void goToProfile(View view) {
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(intent);
         return;
     }

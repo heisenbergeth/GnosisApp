@@ -8,13 +8,13 @@
 
     <EditText
         android:id="@+id/school"
-        android:layout_width="214dp"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/phone2"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="227dp"
-        android:paddingLeft="5dp"
-        android:background="@drawable/rounded_edittext"/>
+        android:background="@drawable/rounded_edittext"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -51,24 +51,24 @@
 
     <EditText
         android:id="@+id/phone2"
-        android:layout_width="214dp"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/name"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="185dp"
         android:background="@drawable/rounded_edittext"
-        android:paddingLeft="5dp"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:paddingLeft="5dp" />
 
     <EditText
         android:id="@+id/course"
-        android:layout_width="215dp"
+        android:layout_width="237dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/phone2"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="218dp"
         android:background="@drawable/rounded_edittext"
-        android:paddingLeft="5dp"/>
+        android:paddingLeft="5dp" />
 
     <ImageView
         android:id="@+id/profileImage"
@@ -77,38 +77,56 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/default_pic"
         android:background="@drawable/rounded_edittext"/>
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="214dp"
+        android:layout_width="237dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="54dp"
         android:layout_marginTop="144dp"
         android:background="@drawable/rounded_edittext"
-        android:paddingLeft="5dp"/>
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/about"
+        android:layout_width="236dp"
+        android:layout_height="93dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/school"
+        android:layout_marginBottom="105dp"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/confirm"
-        android:layout_width="278dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp"
-        android:text="Save"
-        android:background="@drawable/rounded_edittext"/>
+        android:layout_width="98dp"
+        android:layout_height="29dp"
+        android:layout_alignStart="@+id/school"
+        android:layout_alignTop="@+id/back"
+        android:background="@drawable/rounded_edittext"
+        android:text="Save" />
 
     <Button
         android:id="@+id/back"
-        android:layout_width="278dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/school"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:text="back"
-        android:background="@drawable/rounded_edittext"/>
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/rounded_edittext"
+        android:text="back" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_alignTop="@+id/about"
+        android:text="About" />
 
 </RelativeLayout>
