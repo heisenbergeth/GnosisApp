@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private EditText mNameField, mPhoneField, mSchool, mCourse;
+    private EditText mNameField, mPhoneField, mSchool, mCourse, mAbout;
 
     private Button mBack, mConfirm;
 
@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
 
-    private String userId, name, phone, profileImageUrl, userSex, school, course;
+    private String userId, name, phone, profileImageUrl, userSex, school, course, about;
 
     private Uri resultUri;
 
@@ -59,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         mSchool = (EditText) findViewById(R.id.school);
         mCourse = (EditText) findViewById(R.id.course);
+        mAbout = (EditText) findViewById(R.id.about);
 
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
@@ -85,13 +86,17 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveUserInformation();
+                finish();
+                Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
+                startActivity(intent);
             }
         });
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                return;
+                Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -122,12 +127,16 @@ public class SettingsActivity extends AppCompatActivity {
                         course=map.get("course").toString();
                         mCourse.setText(course);
                     }
+                    if(map.get("about")!=null){
+                        about=map.get("about").toString();
+                        mAbout.setText(about);
+                    }
                     Glide.clear(mProfileImage);
                     if(map.get("profileImageUrl")!=null){
                         profileImageUrl = map.get("profileImageUrl").toString();
                         switch(profileImageUrl){
                             case "default":
-                                Glide.with(getApplication()).load(R.mipmap.ic_launcher).into(mProfileImage);
+                                Glide.with(getApplication()).load(R.mipmap.default_pic).into(mProfileImage);
                                 break;
                             default:
                                 Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
@@ -150,12 +159,14 @@ public class SettingsActivity extends AppCompatActivity {
         phone = mPhoneField.getText().toString();
         school = mSchool.getText().toString();
         course = mCourse.getText().toString();
+        about = mAbout.getText().toString();
 
         Map userInfo = new HashMap();
         userInfo.put("name", name);
         userInfo.put("phone", phone);
         userInfo.put("school", school);
         userInfo.put("course", course);
+        userInfo.put("about", about);
         mUserDatabase.updateChildren(userInfo);
         if(resultUri != null){
             StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
