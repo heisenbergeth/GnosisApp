@@ -1,14 +1,19 @@
 package com.gnosis.app;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Window;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -24,6 +29,7 @@ import com.gnosis.app.Matches.MatchesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
@@ -32,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private String currentUId;
+    private String currentUId, name, phone, profileImageUrl, userSex, school, course,about;
 
-    private TextView textView;
+    private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle;
 
-    private DatabaseReference usersDb;
+    private ImageView mProfileImage;
+
+    private DatabaseReference usersDb, mUserDatabase;
 
     ListView listView;
     List<cards> rowItems;
@@ -111,11 +119,137 @@ public class MainActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
+                cards obj = (cards) dataObject;
+                String userId = obj.getUserId();
+                showAlertbox(userId);
                 Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+    public void showAlertbox(String userId) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.popup);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+
+        mNameField = (TextView) dialog.findViewById(R.id.name);
+        mSchool = (TextView) dialog.findViewById(R.id.school);
+        mCourse = (TextView) dialog.findViewById(R.id.course);
+        mAbout = (TextView) dialog.findViewById(R.id.about);
+        mAboutTitle = (TextView) dialog.findViewById(R.id.about_title);
+        mProfileImage = (ImageView) dialog.findViewById(R.id.profileImage);
+
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if(map.get("name")!=null){
+                        name = map.get("name").toString();
+                        mNameField.setText(name);
+                    }
+                    if(map.get("school")!=null){
+                        school=map.get("school").toString();
+                        mSchool.setText(school);
+                    }
+                    if(map.get("course")!=null){
+                        course=map.get("course").toString();
+                        mCourse.setText(course);
+                    }
+                    if(map.get("about")!=null){
+                        about=map.get("about").toString();
+                        mAbout.setText(about);
+                    }
+                    else{
+                        mAboutTitle.setVisibility(View.GONE);
+                        mAbout.setVisibility(View.GONE);
+                    }
+                    Glide.clear(mProfileImage);
+                    if(map.get("profileImageUrl")!=null) {
+                        profileImageUrl = map.get("profileImageUrl").toString();
+                        switch (profileImageUrl) {
+                            case "default":
+                                Glide.with(getApplication()).load(R.mipmap.default_pic).into(mProfileImage);
+                                break;
+                            default:
+                                Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
+                                break;
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Button close = (Button) dialog.findViewById(R.id.close);
+
+
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    /** private void getUserInfo() {
+        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if(map.get("name")!=null){
+                        name = map.get("name").toString();
+                        mNameField.setText(name);
+                    }
+                    if(map.get("sex")!=null){
+                        userSex = map.get("sex").toString();
+                    }
+                    if(map.get("school")!=null){
+                        school=map.get("school").toString();
+                        mSchool.setText(school);
+                    }
+                    if(map.get("course")!=null){
+                        course=map.get("course").toString();
+                        mCourse.setText(course);
+                    }
+                    if(map.get("about")!=null){
+                        about=map.get("about").toString();
+                        mAbout.setText(about);
+                    }
+                    Glide.clear(mProfileImage);
+                    if(map.get("profileImageUrl")!=null){
+                        profileImageUrl = map.get("profileImageUrl").toString();
+                        switch(profileImageUrl){
+                            case "default":
+                                Glide.with(getApplication()).load(R.mipmap.default_pic).into(mProfileImage);
+                                break;
+                            default:
+                                Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
+                                break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    } */
 
     private void isConnectionMatch(String userId) {
         //check kung nasa yep ka din niya
@@ -227,4 +361,5 @@ public class MainActivity extends AppCompatActivity {
         return;
 
     }
+
 }
