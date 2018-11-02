@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private String currentUId, name, phone, profileImageUrl, userSex, school, course,about;
+    private String currentUId, name, profileImageUrl, school, course,about;
 
     private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle;
 
@@ -122,11 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserId();
                 showAlertbox(userId);
-                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+    //Dialog box pag clinick yung card
     public void showAlertbox(String userId) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -190,9 +190,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button close = (Button) dialog.findViewById(R.id.close);
-
-
-
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,53 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /** private void getUserInfo() {
-        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    if(map.get("name")!=null){
-                        name = map.get("name").toString();
-                        mNameField.setText(name);
-                    }
-                    if(map.get("sex")!=null){
-                        userSex = map.get("sex").toString();
-                    }
-                    if(map.get("school")!=null){
-                        school=map.get("school").toString();
-                        mSchool.setText(school);
-                    }
-                    if(map.get("course")!=null){
-                        course=map.get("course").toString();
-                        mCourse.setText(course);
-                    }
-                    if(map.get("about")!=null){
-                        about=map.get("about").toString();
-                        mAbout.setText(about);
-                    }
-                    Glide.clear(mProfileImage);
-                    if(map.get("profileImageUrl")!=null){
-                        profileImageUrl = map.get("profileImageUrl").toString();
-                        switch(profileImageUrl){
-                            case "default":
-                                Glide.with(getApplication()).load(R.mipmap.default_pic).into(mProfileImage);
-                                break;
-                            default:
-                                Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
-                                break;
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    } */
 
     private void isConnectionMatch(String userId) {
         //check kung nasa yep ka din niya
@@ -309,9 +259,12 @@ public class MainActivity extends AppCompatActivity {
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //conditions for cards
                 if (dataSnapshot.child("type").getValue() != null) {
+                                                    //wala ka sa nopeDb ng user                                                   //wala ka sa yepDb ng user                                                  //opposite userType ng user
                     if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("type").getValue().toString().equals(oppositeUserType)) {
                         String profileImageUrl = "default";
+                        //kung hindi default yung userpic, irerecall sa database yung url ng profilepic na inupload niya
                         if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
                             profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                         }
