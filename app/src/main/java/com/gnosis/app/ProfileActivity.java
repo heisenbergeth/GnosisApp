@@ -3,6 +3,7 @@ package com.gnosis.app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView mNameField, mPhoneField, mSchool, mCourse, mAbout;
+    private TextView mNameField, mPhoneField, mSchool, mCourse, mAbout, mInterest;
 
     private Button mBack, mConfirm;
 
@@ -30,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
 
-    private String userId, name, phone, profileImageUrl, userSex, school, course,about;
+    private String userId, name, phone, profileImageUrl, userSex, school, course,about, interest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,10 @@ public class ProfileActivity extends AppCompatActivity {
         mSchool = (TextView) findViewById(R.id.school);
         mCourse = (TextView) findViewById(R.id.course);
         mAbout = (TextView) findViewById(R.id.about);
+        mAbout.setMovementMethod(new ScrollingMovementMethod());
+
+        mInterest = (TextView) findViewById(R.id.subject_interest);
+        mInterest.setMovementMethod(new ScrollingMovementMethod());
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
 
@@ -72,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+
                     if(map.get("name")!=null){
                         name = map.get("name").toString();
                         mNameField.setText(name);
@@ -94,6 +100,10 @@ public class ProfileActivity extends AppCompatActivity {
                     if(map.get("about")!=null){
                         about=map.get("about").toString();
                         mAbout.setText(about);
+                    }
+                    if(map.get("interest_string") !=null){
+                        interest=map.get("interest_string").toString();
+                        mInterest.setText(interest);
                     }
                     Glide.clear(mProfileImage);
                     if(map.get("profileImageUrl")!=null){
