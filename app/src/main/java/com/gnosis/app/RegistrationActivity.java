@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -92,6 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+
         //Register button click event
         mRegister.setOnClickListener(new View.OnClickListener() {
 
@@ -102,7 +104,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String password = mPassword.getText().toString();
                 final String name = mName.getText().toString();
                 final String school= mSpinner1.getSelectedItem().toString();
+                final int school1= mSpinner1.getSelectedItemPosition();
+                final String schoolpos = String.valueOf(school1);
                 final String course= mSpinner2.getSelectedItem().toString();
+                final int course1= mSpinner2.getSelectedItemPosition();
+                final String coursepos = String.valueOf(course1);
 
                 //if fields are empty
                 if (TextUtils.isEmpty(mEmail.getText().toString()) || TextUtils.isEmpty(mPassword.getText().toString())
@@ -136,7 +142,9 @@ public class RegistrationActivity extends AppCompatActivity {
                                 userInfo.put("type", radioButton.getText().toString());
                                 userInfo.put("profileImageUrl", "default");
                                 userInfo.put("school", school);
+                                userInfo.put("school_pos", schoolpos);
                                 userInfo.put("course", course);
+                                userInfo.put("course_pos", coursepos);
 
                                 currentUserDb.updateChildren(userInfo);
 
