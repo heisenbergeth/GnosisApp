@@ -99,6 +99,24 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Long text" />
+            <TextView
+                android:id="@+id/interest_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Interest"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Long text" />
 
 
         </LinearLayout>
