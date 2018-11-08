@@ -1,28 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.gnosis.app.RegistrationActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:fitsSystemWindows="true"
+tools:context="com.gnosis.app.RegistrationActivity">>
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="300dp"
+<LinearLayout
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <ImageView android:src="@mipmap/logoedit"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal" />
+    <ImageView
+        android:layout_width="213dp"
+        android:layout_height="58dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="17dp"
+        android:src="@mipmap/sign1" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:hint="Name"
+            android:singleLine="true"
+            android:inputType="textPersonName"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:hint="Password"
+            android:singleLine="true"
+            android:inputType="textPassword" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:passwordToggleEnabled="true">
+        <EditText android:id="@+id/rePW"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPassword"
+            android:hint="Re-enter Password"
+            android:imeOptions="actionDone"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/name"
+        android:text="School"
+        android:layout_alignLeft="@+id/name" />
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="301dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:hint="Name"
-        android:singleLine="true" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/schools_list"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/name"
+        android:text="Course" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:entries="@array/course_list"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/name"
+        android:text="Account Type" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="301dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="89dp">
+        android:layout_gravity="center_horizontal"
+        >
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -35,94 +171,32 @@
             android:text="Learner" />
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:singleLine="true" />
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email"
-        android:layout_centerHorizontal="true"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="147dp"
-            android:hint="Password"
-            android:singleLine="true"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"/>
-
-    </android.support.design.widget.TextInputLayout>
 
 
 
-    <Button
+
+
+
+
+
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/register"
-        android:layout_width="242dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="Register" />
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:padding="12dp"
+        android:text="Register"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+
+    <TextView android:id="@+id/login"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/name"
-        android:layout_marginBottom="226dp"
-        android:text="Course" />
+        android:layout_marginBottom="24dp"
+        android:text="Already a member? Login"
+        android:gravity="center"
+        android:textSize="16dip"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/name"
-        android:layout_marginTop="202dp"
-        android:text="School"
-        android:layout_alignLeft="@+id/name" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/name"
-        android:layout_marginBottom="164dp"
-        android:text="Account Type" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="301dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="229dp"
-        android:entries="@array/schools_list" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="301dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="195dp"
-        android:entries="@array/course_list" />
-
-
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

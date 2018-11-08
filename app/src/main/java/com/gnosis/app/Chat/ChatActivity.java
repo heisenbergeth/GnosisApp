@@ -1,12 +1,18 @@
 package com.gnosis.app.Chat;
 
+import android.content.Context;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -32,15 +38,25 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mSendEditText;
 
+    private NestedScrollView nestedScrollView;
+
     private Button mSendButton;
 
-    private String currentUserID, matchId, chatId;
+    private String currentUserID, matchId, chatId, mName;
 
     DatabaseReference mDatabaseUser, mDatabaseChat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        mName = getIntent().getExtras().getString("name");
+
+        getSupportActionBar().setTitle(mName);
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         matchId = getIntent().getExtras().getString("matchId");
 
@@ -55,17 +71,49 @@ public class ChatActivity extends AppCompatActivity {
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(false);
         mChatLayoutManager = new LinearLayoutManager(ChatActivity.this);
+
+        nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScroll);
+
+
+
         mRecyclerView.setLayoutManager(mChatLayoutManager);
         mChatAdapter = new ChatAdapter(getDataSetChat(), ChatActivity.this);
+
         mRecyclerView.setAdapter(mChatAdapter);
+
+        nestedScrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        },1000);
 
         mSendEditText = findViewById(R.id.message);
         mSendButton = findViewById(R.id.send);
 
+        mSendEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nestedScrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                },1000);
+            }
+        });
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
+                nestedScrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                },1000);
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(mSendButton.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
     }
@@ -145,6 +193,16 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //back button
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+
+        if (id== android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private ArrayList<ChatObject> resultsChat = new ArrayList<ChatObject>();
     private List<ChatObject> getDataSetChat() {

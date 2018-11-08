@@ -24,13 +24,12 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="200sp"
         android:layout_height="200sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:background="@drawable/border"
         android:src="@mipmap/default_pic" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

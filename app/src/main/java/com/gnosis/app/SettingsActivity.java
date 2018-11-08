@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -108,6 +109,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         listItems = getResources().getStringArray(R.array.subject_interests);
+        Arrays.sort(listItems);
+
         checkedItems = new boolean[listItems.length];
         checkedItemsBoolean();
         getUserInfo();

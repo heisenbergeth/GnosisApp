@@ -16,12 +16,12 @@ import java.util.List;
  */
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolders>{
-    private List<RequestsObject> matchesList;
+    private List<RequestsObject> requestList;
     private Context context;
 
 
-    public RequestsAdapter(List<RequestsObject> matchesList, Context context){
-        this.matchesList = matchesList;
+    public RequestsAdapter(List<RequestsObject> requestList, Context context){
+        this.requestList = requestList;
         this.context = context;
     }
 
@@ -38,15 +38,15 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolders>{
 
     @Override
     public void onBindViewHolder(RequestsViewHolders holder, int position) {
-        holder.mMatchId.setText(matchesList.get(position).getUserId());
-        holder.mMatchName.setText(matchesList.get(position).getName());
-        if(!matchesList.get(position).getProfileImageUrl().equals("default")){
-            Glide.with(context).load(matchesList.get(position).getProfileImageUrl()).into(holder.mMatchImage);
+        holder.mMatchId.setText(requestList.get(position).getUserId());
+        holder.mMatchName.setText(requestList.get(position).getName());
+        if(!requestList.get(position).getProfileImageUrl().equals("default")){
+            Glide.with(context).load(requestList.get(position).getProfileImageUrl()).into(holder.mMatchImage);
         }
     }
 
     @Override
     public int getItemCount() {
-        return this.matchesList.size();
+        return this.requestList.size();
     }
 }

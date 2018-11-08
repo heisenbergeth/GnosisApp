@@ -7,6 +7,7 @@
     android:background="@android:color/white"
     tools:context="com.gnosis.app.RegistrationActivity">
 
+
     <EditText
         android:id="@+id/email"
         android:layout_width="300dp"

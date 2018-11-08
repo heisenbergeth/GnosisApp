@@ -1,6 +1,7 @@
 package com.gnosis.app;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -32,13 +33,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button mRegister;
-    private EditText mEmail, mPassword, mName;
+    private EditText mEmail, mPassword, mName, mRePassword;
+    private TextView mLogin;
 
     private RadioGroup mRadioGroup;
 
@@ -51,10 +55,11 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        //getSupportActionBar().setTitle("Register");
 
         //back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
 
@@ -72,24 +77,42 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         };
 
+        final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Creating Account...");
+
 
         mRegister = (Button) findViewById(R.id.register);
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
+        mRePassword = (EditText) findViewById(R.id.rePW);
         mName = (EditText) findViewById(R.id.name);
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         mSpinner1 = (Spinner) findViewById(R.id.spinner1);
         mSpinner2 = (Spinner) findViewById(R.id.spinner2);
+        mLogin = (TextView) findViewById(R.id.login);
 
         //Dismiss keyboard after enter key on password
-        mPassword.setOnEditorActionListener(new OnEditorActionListener() {
+        mRePassword.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(mPassword.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    in.hideSoftInputFromWindow(mRePassword.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 return false;
+            }
+        });
+
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    Intent intent = new Intent(RegistrationActivity.this, ChooseLoginRegistrationActivity.class);
+                    progressDialog.dismiss();
+                    startActivity(intent);
+
             }
         });
 
@@ -102,6 +125,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
+                final String repassword = mRePassword.getText().toString();
                 final String name = mName.getText().toString();
                 final String school= mSpinner1.getSelectedItem().toString();
                 final int school1= mSpinner1.getSelectedItemPosition();
@@ -111,12 +135,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String coursepos = String.valueOf(course1);
 
                 //if fields are empty
-                if (TextUtils.isEmpty(mEmail.getText().toString()) || TextUtils.isEmpty(mPassword.getText().toString())
-                        || TextUtils.isEmpty(mName.getText().toString()) || TextUtils.isEmpty((mSpinner1.getSelectedItem().toString()))
-                        || TextUtils.isEmpty((mSpinner2.getSelectedItem().toString())) ||mRadioGroup.getCheckedRadioButtonId()==-1) {
-                    Toast.makeText(RegistrationActivity.this, "Input error. Please complete all the fields.", Toast.LENGTH_LONG).show();
+                if (!validate()) {
+                    onSignupFailed();
+                    return;
                 }
                 else {
+                    mRegister.setEnabled(false);
+                    progressDialog.show();
 
                     int selectId = mRadioGroup.getCheckedRadioButtonId();
 
@@ -132,6 +157,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
+                                progressDialog.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "User already exists.", Toast.LENGTH_SHORT).show();
                             } else {
 
@@ -153,13 +179,14 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    mRegister.setEnabled(true);
                 }
             }
         });
     }
 
 
-    //back button
+    /*back button
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
@@ -168,7 +195,7 @@ public class RegistrationActivity extends AppCompatActivity {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -180,5 +207,63 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(firebaseAuthStateListener);
+    }
+
+    public void onSignupFailed() {
+        Toast.makeText(getBaseContext(), "Registration failed", Toast.LENGTH_LONG).show();
+
+        mRegister.setEnabled(true);
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        final String email = mEmail.getText().toString();
+        final String password = mPassword.getText().toString();
+        final String repassword = mRePassword.getText().toString();
+        final String name = mName.getText().toString();
+        final String school= mSpinner1.getSelectedItem().toString();
+        final int school1= mSpinner1.getSelectedItemPosition();
+        final String schoolpos = String.valueOf(school1);
+        final String course= mSpinner2.getSelectedItem().toString();
+        final int course1= mSpinner2.getSelectedItemPosition();
+        final String coursepos = String.valueOf(course1);
+
+        if (name.isEmpty() || name.length() < 3) {
+            mName.setError("at least 3 characters");
+            valid = false;
+        } else {
+            mName.setError(null);
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmail.setError("enter a valid email address");
+            valid = false;
+        } else {
+            mEmail.setError(null);
+        }
+
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 6) {
+            mPassword.setError("Enter between 4 and 6 alphanumeric characters");
+            valid = false;
+        } else {
+            mPassword.setError(null);
+        }
+
+        if (repassword.isEmpty() || repassword.length() < 4 || repassword.length() > 6 || !(repassword.equals(password))) {
+            mRePassword.setError("Password do not match");
+            valid = false;
+        } else {
+            mRePassword.setError(null);
+        }
+
+        if (TextUtils.isEmpty((mSpinner1.getSelectedItem().toString()))
+                || TextUtils.isEmpty((mSpinner2.getSelectedItem().toString())) ||mRadioGroup.getCheckedRadioButtonId()==-1) {
+            Toast.makeText(RegistrationActivity.this, "Input error. Please complete all the fields.", Toast.LENGTH_LONG).show();
+            valid=false;
+        }
+
+        return valid;
     }
 }

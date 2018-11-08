@@ -1,6 +1,8 @@
 package com.gnosis.app;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -267,11 +269,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getOppositeTypeUsers(){
+
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //conditions for cards
                 if (dataSnapshot.child("type").getValue() != null) {
+
+
                                                     //wala ka sa nopeDb ng user                                                   //wala ka sa yepDb ng user                                                  //opposite userType ng user
                     if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("type").getValue().toString().equals(oppositeUserType)) {
                         String profileImageUrl = "default";
@@ -305,11 +310,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void logoutUser(View view) {
-        mAuth.signOut();
-        Intent intent = new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class);
-        startActivity(intent);
-        finish();
-        return;
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAuth.signOut();
+                        Intent intent = new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+
     }
 
 

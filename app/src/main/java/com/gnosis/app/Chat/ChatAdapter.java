@@ -2,6 +2,8 @@ package com.gnosis.app.Chat;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,18 +40,26 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders>{
         return rcv;
     }
 
+
+
     @Override
     public void onBindViewHolder(ChatViewHolders holder, int position) {
         holder.mMessage.setText(chatList.get(position).getMessage());
         if(chatList.get(position).getCurrentUser()){
-            holder.mMessage.setGravity(Gravity.END);
-            holder.mMessage.setTextColor(Color.parseColor("#404040"));
-            holder.mContainer.setBackgroundColor(Color.parseColor("#F4F4F4"));
-        }else{
-            holder.mMessage.setGravity(Gravity.START);
+            holder.color=holder.mBlue;
+            holder.mContainer.setGravity(Gravity.END);
             holder.mMessage.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.mContainer.setBackgroundColor(Color.parseColor("#2DB4C8"));
+         //   holder.mContainer1.setBackgroundColor(Color.parseColor("#2DB4C8")); //message ko
+
+        }else{
+            holder.color=holder.mGray;
+
+            holder.mContainer.setGravity(Gravity.START);
+            holder.mMessage.setTextColor(Color.parseColor("#404040"));
+           // holder.mContainer1.setBackgroundColor(Color.parseColor("#AAAAAA")); //message niya
+
         }
+        ((GradientDrawable) holder.mContainer1.getBackground()).setColor(holder.color);
 
     }
 

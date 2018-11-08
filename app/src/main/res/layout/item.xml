@@ -23,7 +23,8 @@
             android:layout_gravity="center"
             android:layout_width="300dp"
             android:layout_height="350dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/image"
