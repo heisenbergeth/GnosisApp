@@ -1,6 +1,8 @@
 package com.gnosis.app;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private String currentUId, name, profileImageUrl, school, course,about;
+    private String currentUId, name, profileImageUrl, school, course,about, interest;
 
-    private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle;
+    private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle, mInterest, mInterestTitle;
 
     private ImageView mProfileImage;
 
@@ -139,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
         mCourse = (TextView) dialog.findViewById(R.id.course);
         mAbout = (TextView) dialog.findViewById(R.id.about);
         mAboutTitle = (TextView) dialog.findViewById(R.id.about_title);
+        mInterest = (TextView) dialog.findViewById(R.id.interest);
+        mInterestTitle = (TextView) dialog.findViewById(R.id.interest_title);
+
         mProfileImage = (ImageView) dialog.findViewById(R.id.profileImage);
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
@@ -166,6 +171,14 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         mAboutTitle.setVisibility(View.GONE);
                         mAbout.setVisibility(View.GONE);
+                    }
+                    if(map.get("interest_string")!=null){
+                        interest=map.get("interest_string").toString();
+                        mInterest.setText(interest);
+                    }
+                    else{
+                        mInterestTitle.setVisibility(View.GONE);
+                        mInterest.setVisibility(View.GONE);
                     }
                     Glide.clear(mProfileImage);
                     if(map.get("profileImageUrl")!=null) {
@@ -256,11 +269,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getOppositeTypeUsers(){
+
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //conditions for cards
                 if (dataSnapshot.child("type").getValue() != null) {
+
+
                                                     //wala ka sa nopeDb ng user                                                   //wala ka sa yepDb ng user                                                  //opposite userType ng user
                     if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("type").getValue().toString().equals(oppositeUserType)) {
                         String profileImageUrl = "default";
@@ -294,11 +310,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void logoutUser(View view) {
-        mAuth.signOut();
-        Intent intent = new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class);
-        startActivity(intent);
-        finish();
-        return;
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAuth.signOut();
+                        Intent intent = new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+
     }
 
 

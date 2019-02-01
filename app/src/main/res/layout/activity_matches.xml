@@ -17,7 +17,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Matches"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/emptyMatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal|center_vertical|bottom"
+        android:layout_marginBottom="100dp"
+        android:text="Matches empty" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -25,31 +40,53 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+            android:scrollbars="vertical">
+        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.NestedScrollView>
 
+</FrameLayout>
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Requests"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+    <TextView
+        android:id="@+id/emptyReq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="90dp"
+        android:text="Requests empty" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="216dp">
+        android:layout_height="216dp"
+        android:layout_gravity="bottom|end"></android.support.v4.widget.NestedScrollView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.NestedScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+</FrameLayout>
 
 </LinearLayout>

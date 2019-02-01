@@ -17,6 +17,7 @@
         android:layout_marginRight="54dp"
         android:layout_marginTop="144dp"
         android:background="@drawable/rounded_edittext"
+        android:textColor="@color/black"
         android:paddingLeft="5dp"
         android:singleLine="true"/>
 
@@ -28,6 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="185dp"
         android:background="@drawable/rounded_edittext"
+        android:textColor="@color/black"
         android:inputType="phone"
         android:paddingLeft="5dp"
         android:singleLine="true"/>
@@ -75,12 +77,13 @@
         android:layout_width="236dp"
         android:layout_height="93dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/school"
-        android:layout_marginBottom="105dp"
+        android:layout_alignStart="@+id/name"
+        android:layout_marginBottom="151dp"
         android:background="@drawable/rounded_edittext"
+        android:textColor="@color/black"
         android:ems="10"
-        android:paddingLeft="5dp"
-        android:inputType="textMultiLine"/>
+        android:inputType="textMultiLine"
+        android:paddingLeft="5dp" />
 
     <Spinner
         android:id="@+id/school"
@@ -88,7 +91,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/name"
         android:layout_alignTop="@+id/textView4"
-        android:entries="@array/schools_list" />
+        android:entries="@array/schools_list"
+        />
 
     <Spinner
         android:id="@+id/course"
@@ -96,46 +100,42 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/name"
-        android:layout_marginBottom="220dp"
+        android:layout_marginBottom="270dp"
         android:entries="@array/course_list" />
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="100sp"
         android:layout_height="100sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:src="@mipmap/default_pic"
-        android:background="@drawable/rounded_edittext"/>
+        android:src="@mipmap/default_pic" />
 
     <Button
         android:id="@+id/confirm"
         android:layout_width="98dp"
-        android:layout_height="29dp"
+        android:layout_height="37dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/name"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/rounded_edittext"
         android:text="Save" />
 
     <Button
         android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="98dp"
+        android:layout_height="37dp"
+        android:layout_alignBottom="@+id/confirm"
         android:layout_alignEnd="@+id/name"
-        android:layout_alignTop="@+id/confirm"
-        android:background="@drawable/rounded_edittext"
         android:text="back" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginBottom="70dp"
+        android:layout_alignBaseline="@+id/select_interest"
+        android:layout_toStartOf="@+id/name"
         android:text="Interest"
         android:textStyle="bold" />
 
@@ -150,12 +150,14 @@
 
     <Button
         android:id="@+id/select_interest"
-        android:layout_width="235dp"
+        android:layout_width="207dp"
         android:layout_height="33dp"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignStart="@+id/name"
-        android:layout_marginBottom="-10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="97dp"
+        android:layout_marginEnd="66dp"
         android:text="Select your subject interests"
-        android:textSize="8dp" />
+        android:textSize="10dp" />
 
 </RelativeLayout>
+

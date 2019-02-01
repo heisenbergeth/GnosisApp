@@ -1,6 +1,7 @@
 package com.gnosis.app.Matches;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,6 +34,10 @@ public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.
         Bundle b = new Bundle();
         b.putString("matchId", mMatchId.getText().toString());
         intent.putExtras(b);
+        Bundle c = new Bundle();
+        c.putString("name", mMatchName.getText().toString());
+        intent.putExtras(c);
         view.getContext().startActivity(intent);
     }
+
 }

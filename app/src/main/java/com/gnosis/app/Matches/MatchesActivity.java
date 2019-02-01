@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gnosis.app.Requests.RequestsAdapter;
 import com.gnosis.app.Requests.RequestsObject;
+import com.gnosis.app.Requests.RequestsAdapter;
+import com.gnosis.app.Matches.MatchesAdapter;
+import com.gnosis.app.Matches.MatchesObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gnosis.app.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +31,7 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView, mRecyclerView1;
     private RecyclerView.Adapter mMatchesAdapter, mRequestsAdapter;
     private RecyclerView.LayoutManager mMatchesLayoutManager, mRequestsLayoutManager;
+    private TextView emptyMatches, emptyReq;
 
 
     private String currentUserID;
@@ -54,8 +62,14 @@ public class MatchesActivity extends AppCompatActivity {
         mRequestsAdapter = new RequestsAdapter(getDataSetRequests(), MatchesActivity.this);
         mRecyclerView1.setAdapter(mRequestsAdapter);
 
-        getUserMatchId();
+        emptyMatches = (TextView) findViewById(R.id.emptyMatches);
+        emptyReq = (TextView) findViewById(R.id.emptyReq);
+        emptyMatches.setVisibility(View.INVISIBLE);
+        emptyReq.setVisibility(View.INVISIBLE);
+
         getUserRequestsId();
+        getUserMatchId();
+
 
 
 
@@ -73,6 +87,7 @@ public class MatchesActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    emptyMatches.setVisibility(View.VISIBLE);
                     Toast.makeText(MatchesActivity.this, "No matches found.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -106,6 +121,7 @@ public class MatchesActivity extends AppCompatActivity {
                     MatchesObject obj = new MatchesObject(userId, name, profileImageUrl);
                     resultsMatches.add(obj);
                     mMatchesAdapter.notifyDataSetChanged();
+                    Log.d("LISTMATCHES", "added object!");
                 }
             }
 
@@ -130,7 +146,8 @@ public class MatchesActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(MatchesActivity.this, "No yeps found.", Toast.LENGTH_SHORT).show();
+                    emptyReq.setVisibility(View.VISIBLE);
+                    Toast.makeText(MatchesActivity.this, "No request found.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -160,9 +177,11 @@ public class MatchesActivity extends AppCompatActivity {
                     }
 
 
-                    RequestsObject obj = new RequestsObject(userId, name, profileImageUrl);
-                    resultsRequests.add(obj);
-                    mMatchesAdapter.notifyDataSetChanged();
+                    RequestsObject obj1 = new RequestsObject(userId, name, profileImageUrl);
+                    resultsRequests.add(obj1);
+                    mRequestsAdapter.notifyDataSetChanged();
+                    Log.d("LISTREQUESTS", "added object!");
+
                 }
             }
 

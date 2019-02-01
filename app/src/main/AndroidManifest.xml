@@ -11,7 +11,7 @@
         android:label="Gnosis"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Dark">
         <activity android:name=".MainActivity" />
         <activity android:name=".ChooseLoginRegistrationActivity">
             <intent-filter>
@@ -24,8 +24,11 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".Matches.MatchesActivity" />
-        <activity android:name=".Chat.ChatActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity
+            android:name=".Chat.ChatActivity"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".Requests.RequestInfo"></activity>
     </application>
 
 </manifest>

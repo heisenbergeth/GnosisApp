@@ -10,7 +10,8 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/white">
 
     <Button
         android:id="@+id/close"
@@ -24,13 +25,12 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="200sp"
         android:layout_height="200sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:background="@drawable/border"
         android:src="@mipmap/default_pic" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,7 +58,8 @@
                 android:paddingBottom="10dp"
                 android:text="FIRST LAST NAME"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
 
             <TextView
@@ -69,7 +70,8 @@
                 android:drawableLeft="@mipmap/sc"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
-                android:text="University" />
+                android:text="University"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/course"
@@ -79,7 +81,8 @@
                 android:drawableLeft="@mipmap/course"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
-                android:text="Course" />
+                android:text="Course"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/about_title"
@@ -88,7 +91,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="About"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/about"
@@ -98,7 +102,28 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Long text" />
+                android:text="Long text"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/interest_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Interest"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Long text"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>

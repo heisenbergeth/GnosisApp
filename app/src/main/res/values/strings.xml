@@ -11,23 +11,50 @@
     <string-array name="schools_list">
         <item></item>
         <item>CvSU Silang</item>
-        <item>CvSU Indang</item>
-        <item>CvSU Carmona</item>
     </string-array>
 
     <string-array name="course_list">
         <item></item>
         <item>BS Information Technology</item>
-        <item>BS Computer Science</item>
-        <item>BS Electronics Engineer</item>
     </string-array>
 
     <string-array name="subject_interests">
         <item>Accounting</item>
-        <item>Physics</item>
+        <item>Physics 1</item>
+        <item>Physics 2</item>
+        <item>English</item>
+        <item>Filipino</item>
+        <item>College Algebra</item>
+        <item>General Psychology</item>
+        <item>IT Fundamentals</item>
+        <item>Programming 1</item>
+        <item>Programming 2</item>
+        <item>Plane Trigonometry</item>
+        <item>Discrete Structure</item>
+        <item>Analytic Geometry</item>
+        <item>Calculus</item>
+        <item>OOP</item>
+        <item>Database Management System</item>
+        <item>Data Structure</item>
+        <item>Assembly Language</item>
+        <item>Operating Systems</item>
+        <item>System Analysis and Design</item>
+        <item>Multimedia System</item>
+        <item>Computer Graphics</item>
+        <item>Statistics</item>
+        <item>Software Engineering</item>
+        <item>Web Development</item>
+        <item>Management Information System</item>
+        <item>Methods of Research</item>
+        <item>Network Management</item>
+        <item>System Security</item>
+        <item>Programming Languages</item>
+        <item>Advanced Programming</item>
         <item>Java</item>
         <item>PHP</item>
         <item>Python</item>
+
+
 
     </string-array>
 
