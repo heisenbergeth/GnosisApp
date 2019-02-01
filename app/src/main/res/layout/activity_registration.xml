@@ -196,7 +196,8 @@ tools:context="com.gnosis.app.RegistrationActivity">>
         android:layout_marginBottom="24dp"
         android:text="Already a member? Login"
         android:gravity="center"
-        android:textSize="16dip"/>
+        android:textSize="16dip"
+        android:background="?attr/selectableItemBackground"/>
 
 </LinearLayout>
 </ScrollView>

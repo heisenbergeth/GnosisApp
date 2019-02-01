@@ -42,7 +42,7 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         final ProgressDialog progressDialog = new ProgressDialog(ChooseLoginRegistrationActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+                R.style.AppTheme_Dark_Dialog1);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
 
@@ -173,8 +173,8 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
             mEmail.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 6) {
-            mPassword.setError("Enter between 4 and 6 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 20) {
+            mPassword.setError("Enter between 4 and 20 alphanumeric characters");
             valid = false;
         } else {
             mPassword.setError(null);

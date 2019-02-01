@@ -10,7 +10,8 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/white">
 
     <Button
         android:id="@+id/close"
@@ -57,7 +58,8 @@
                 android:paddingBottom="10dp"
                 android:text="FIRST LAST NAME"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
 
             <TextView
@@ -68,7 +70,8 @@
                 android:drawableLeft="@mipmap/sc"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
-                android:text="University" />
+                android:text="University"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/course"
@@ -78,7 +81,8 @@
                 android:drawableLeft="@mipmap/course"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
-                android:text="Course" />
+                android:text="Course"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/about_title"
@@ -87,7 +91,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="About"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/about"
@@ -97,7 +102,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Long text" />
+                android:text="Long text"
+                android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/interest_title"
                 android:layout_width="match_parent"
@@ -105,7 +111,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:text="Interest"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/interest"
@@ -115,7 +122,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Long text" />
+                android:text="Long text"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>

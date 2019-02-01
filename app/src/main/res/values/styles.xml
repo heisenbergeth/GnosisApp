@@ -32,9 +32,15 @@
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/primary_dark</item>
         <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:background">@color/monsoon</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Dark.Dialog1" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/primary_dark</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@color/aluminum</item>
     </style>
 
 

@@ -78,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
         };
 
         final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+                R.style.AppTheme_Dark_Dialog1);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
 
@@ -244,14 +244,14 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 6) {
-            mPassword.setError("Enter between 4 and 6 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 20) { //||
+            mPassword.setError("Enter between 4 and 20 alphanumeric characters");
             valid = false;
         } else {
             mPassword.setError(null);
         }
 
-        if (repassword.isEmpty() || repassword.length() < 4 || repassword.length() > 6 || !(repassword.equals(password))) {
+        if (repassword.isEmpty() || !(repassword.equals(password)) || repassword.length() < 4 || repassword.length() > 20) { //
             mRePassword.setError("Password do not match");
             valid = false;
         } else {

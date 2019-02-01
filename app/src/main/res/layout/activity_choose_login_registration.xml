@@ -72,7 +72,9 @@
             android:layout_marginBottom="24dp"
             android:text="No account yet? Create one"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16dip"
+
+            android:background="?attr/selectableItemBackground"/>
 
     </LinearLayout>
 </ScrollView>
