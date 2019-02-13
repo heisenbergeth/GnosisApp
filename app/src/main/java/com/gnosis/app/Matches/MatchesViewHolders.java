@@ -30,12 +30,12 @@ public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), ChatActivity.class);
+        Intent intent = new Intent(view.getContext(), ChatActivity.class); //pagka-click, start ChatActivity forwarding name and matchID
         Bundle b = new Bundle();
         b.putString("matchId", mMatchId.getText().toString());
         intent.putExtras(b);
         Bundle c = new Bundle();
-        c.putString("name", mMatchName.getText().toString());
+        c.putString("name", mMatchName.getText().toString()); //ito yung "name" sa ChatActivity, ifoforward yung laman nito sa chat
         intent.putExtras(c);
         view.getContext().startActivity(intent);
     }

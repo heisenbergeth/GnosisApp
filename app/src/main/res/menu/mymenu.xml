@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mybutton"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@mipmap/outline_video_call"
+        />
+
+
+    <item
+        android:id="@+id/empty"
+        android:title="Options"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:icon="@mipmap/outline_more">
+        <menu>
+
+            <item android:id="@+id/action_settings"
+                android:icon="@android:drawable/ic_menu_preferences"
+                app:showAsAction="ifRoom"
+                android:title="Settings" />
+
+            <item android:id="@+id/action_help"
+                android:icon="@android:drawable/ic_menu_help"
+                app:showAsAction="ifRoom"
+                android:title="Help" />
+
+        </menu>
+
+    </item>
+
+</menu>
