@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.gnosis.tinder"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+//  compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.android.support:support-annotations:x.x.x'
@@ -38,6 +38,10 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.1'
     testCompile 'junit:junit:4.12'
     implementation files('libs/gson-2.4.jar')
+
+    implementation 'io.agora.rtc:full-sdk:2.3.3'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+
 
 }
 

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -13,7 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.content.Intent;
 
+import com.gnosis.app.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -201,8 +205,26 @@ public class ChatActivity extends AppCompatActivity {
         if (id== android.R.id.home){
             this.finish();
         }
+        if (id == R.id.mybutton) {
+            Intent intent=new Intent(this,VideoChatViewActivity.class);
+            Bundle b = new Bundle();
+            b.putString("chatId", chatId);
+            intent.putExtras(b);
+            startActivity(intent);
+
+
+
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     private ArrayList<ChatObject> resultsChat = new ArrayList<ChatObject>();
     private List<ChatObject> getDataSetChat() {
