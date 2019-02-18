@@ -35,13 +35,37 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="213dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:src="@mipmap/sign1" />
+        <ImageView
+            android:layout_width="213dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="180dp"
+            android:src="@mipmap/outline_android_white_48" />
+
+        <ImageView
+            android:layout_width="213dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="175dp"
+            android:src="@mipmap/khanacademy"
+            android:onClick="goToKhanViewer"/>
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="285dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="226dp"
-            android:text="Suggestion empty" />
+            android:textStyle="bold"
+            android:text="Suggestions are currently empty. While waiting, try Khan Academy, a free, world-class source of educational material."
+            android:textAlignment="center" />
 
         <com.lorentzos.flingswipe.SwipeFlingAdapterView
             android:id="@+id/frame"
@@ -58,8 +82,18 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal|bottom"
             android:textAlignment="center"
-            android:layout_marginBottom="22dp"
-            android:text="Swipe left to dismiss, right to add to your match list." />
+            android:layout_marginBottom="15dp"
+            android:textStyle="bold"
+            android:text="Swipe right to add to your match list and left to dismiss." />
+
+        <ImageView
+            android:id="@+id/instruction1"
+            android:layout_width="38dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="0dp"
+            android:src="@mipmap/outline_info_white_48" />
 
     </FrameLayout>
 

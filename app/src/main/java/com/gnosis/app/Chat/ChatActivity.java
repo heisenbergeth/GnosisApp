@@ -205,6 +205,8 @@ public class ChatActivity extends AppCompatActivity {
         if (id== android.R.id.home){
             this.finish();
         }
+
+        //send chatId data to videoChatActivity
         if (id == R.id.mybutton) {
             Intent intent=new Intent(this,VideoChatViewActivity.class);
             Bundle b = new Bundle();

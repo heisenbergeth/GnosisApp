@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle, mInterest, mInterestTitle;
 
-    private ImageView mProfileImage;
+    private ImageView mProfileImage, info;
 
     private DatabaseReference usersDb, mUserDatabase;
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         textView = (TextView) findViewById(R.id.instruction);
+        info= (ImageView) findViewById(R.id.instruction1);
         rowItems = new ArrayList<cards>();
 
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
                 textView.setVisibility(View.GONE);
+                info.setVisibility(View.GONE);
 
             }
 
@@ -311,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logoutUser(View view) {
         new AlertDialog.Builder(this)
+                .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -340,5 +343,12 @@ public class MainActivity extends AppCompatActivity {
         return;
 
     }
+    public void goToKhanViewer(View view) {
+        Intent intent = new Intent(MainActivity.this, KhanViewer.class);
+        startActivity(intent);
+        return;
+
+    }
+
 
 }
