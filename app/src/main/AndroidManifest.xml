@@ -43,6 +43,7 @@
             android:theme="@style/FullScreenVideoTheme">
         </activity>
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".ReportModule" />
         <activity android:name=".Requests.RequestInfo"></activity>
     </application>
 

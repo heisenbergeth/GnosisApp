@@ -1,11 +1,14 @@
 package com.gnosis.app.Chat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,14 +19,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.gnosis.app.MainActivity;
+import com.gnosis.app.ReportModule;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.gnosis.app.Matches.MatchesActivity;
 import com.gnosis.app.Matches.MatchesAdapter;
@@ -214,7 +220,50 @@ public class ChatActivity extends AppCompatActivity {
             intent.putExtras(b);
             startActivity(intent);
 
+        }
+        //report user
+        if (id == R.id.action_report) {
+            Intent intent=new Intent(this,ReportModule.class);
+            Bundle c = new Bundle();
+            c.putString("reportedUID", matchId);
+            intent.putExtras(c);
+            startActivity(intent);
 
+        }
+        //block user
+        if (id == R.id.action_block) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Block")
+                    .setMessage("This action can not be undone and will delete all your conversations between each other." +
+                            " Are you sure you want to permanently block this user? ")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            DatabaseReference dMatches1 = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID).child("connections").child("matches").child(matchId);
+                            dMatches1.removeValue();
+
+                            DatabaseReference dYeps1 = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID).child("connections").child("yeps").child(matchId);
+                            dYeps1.removeValue();
+
+                            DatabaseReference dMatches2 = FirebaseDatabase.getInstance().getReference("Users").child(matchId).child("connections").child("matches").child(currentUserID);
+                            dMatches2.removeValue();
+
+                            DatabaseReference dYeps2 = FirebaseDatabase.getInstance().getReference("Users").child(matchId).child("connections").child("yeps").child(currentUserID);
+                            dYeps2.removeValue();
+                            Toast.makeText(ChatActivity.this, "You have successfully blocked this user.", Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
 
         }
         return super.onOptionsItemSelected(item);
