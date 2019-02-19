@@ -16,15 +16,15 @@
         android:icon="@mipmap/outline_more">
         <menu>
 
-            <item android:id="@+id/action_settings"
-                android:icon="@android:drawable/ic_menu_preferences"
+            <item android:id="@+id/action_report"
+                android:icon="@mipmap/outline_report_black_48"
                 app:showAsAction="ifRoom"
-                android:title="Settings" />
+                android:title="Report" />
 
-            <item android:id="@+id/action_help"
-                android:icon="@android:drawable/ic_menu_help"
+            <item android:id="@+id/action_block"
+                android:icon="@mipmap/outline_block_black_48"
                 app:showAsAction="ifRoom"
-                android:title="Help" />
+                android:title="Block" />
 
         </menu>
 

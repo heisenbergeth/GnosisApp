@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/undo"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@mipmap/left_white"
+        />
+    <item
+        android:id="@+id/redo"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@mipmap/right_white"
+        />
+
+    <item
+        android:id="@+id/refresh"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@mipmap/refresh"
+        />
+
+
+
+</menu>
