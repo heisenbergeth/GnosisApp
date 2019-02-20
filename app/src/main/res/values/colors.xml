@@ -9,6 +9,12 @@
     <color name="primary_darker">#CC1D1D</color>
     <color name="accent">#FFFFFF</color>
 
+    <color name="primary1">#2E4272</color>
+    <color name="primary_dark1">#162955</color>
+    <color name="primary_darker1">#061539</color>
+    <color name="accent1">#FFFFFF</color>
+    <color name="windowbackground">#4F628E</color>
+
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>

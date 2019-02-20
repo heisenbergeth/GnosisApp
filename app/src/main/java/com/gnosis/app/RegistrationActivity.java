@@ -1,6 +1,7 @@
 package com.gnosis.app;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -25,13 +28,17 @@ import android.text.TextUtils;
 import android.widget.Spinner;
 
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -140,46 +147,62 @@ public class RegistrationActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    mRegister.setEnabled(false);
-                    progressDialog.show();
+                    final Dialog dialog = new Dialog(RegistrationActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.terms_popup);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.setCancelable(true);
 
-                    int selectId = mRadioGroup.getCheckedRadioButtonId();
-
-                    final RadioButton radioButton = (RadioButton) findViewById(selectId);
-
-                    if (radioButton.getText() == null) {
-                        return;
-                    }
-
-
-
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+                    Button accept = (Button) dialog.findViewById(R.id.accept);
+                    accept.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                progressDialog.dismiss();
-                                Toast.makeText(RegistrationActivity.this, "User already exists.", Toast.LENGTH_SHORT).show();
-                            } else {
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            mRegister.setEnabled(false);
+                            progressDialog.show();
 
-                                String userId = mAuth.getCurrentUser().getUid();
-                                DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-                                Map userInfo = new HashMap<>();
-                                userInfo.put("name", name);
-                                userInfo.put("type", radioButton.getText().toString());
-                                userInfo.put("profileImageUrl", "default");
-                                userInfo.put("school", school);
-                                userInfo.put("school_pos", schoolpos);
-                                userInfo.put("course", course);
-                                userInfo.put("course_pos", coursepos);
+                            int selectId = mRadioGroup.getCheckedRadioButtonId();
 
-                                currentUserDb.updateChildren(userInfo);
+                            final RadioButton radioButton = (RadioButton) findViewById(selectId);
 
-                                Toast.makeText(RegistrationActivity.this,
-                                        "Registration Successful.", Toast.LENGTH_SHORT).show();
+                            if (radioButton.getText() == null) {
+                                return;
                             }
+
+
+
+                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(RegistrationActivity.this, "User already exists.", Toast.LENGTH_SHORT).show();
+                                    } else {
+
+                                        String userId = mAuth.getCurrentUser().getUid();
+                                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                                        Map userInfo = new HashMap<>();
+                                        userInfo.put("name", name);
+                                        userInfo.put("type", radioButton.getText().toString());
+                                        userInfo.put("profileImageUrl", "default");
+                                        userInfo.put("school", school);
+                                        userInfo.put("school_pos", schoolpos);
+                                        userInfo.put("course", course);
+                                        userInfo.put("course_pos", coursepos);
+
+                                        currentUserDb.updateChildren(userInfo);
+
+                                        Toast.makeText(RegistrationActivity.this,
+                                                "Registration Successful.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            mRegister.setEnabled(true);
                         }
                     });
-                    mRegister.setEnabled(true);
+                    dialog.show();
+
+
                 }
             }
         });
@@ -265,5 +288,23 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public void showAlertbox() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.terms_popup);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+
+        Button accept = (Button) dialog.findViewById(R.id.accept);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
     }
 }

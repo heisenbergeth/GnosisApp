@@ -29,6 +29,8 @@ import com.gnosis.app.Cards.arrayAdapter;
 import com.gnosis.app.Cards.cards;
 import com.gnosis.app.Matches.MatchesActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -315,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
-                .setCancelable(false)
+            //    .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mAuth.signOut();
