@@ -1,9 +1,13 @@
 package com.gnosis.app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile2);
+
+        getSupportActionBar().setTitle("Profile");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mNameField = (TextView) findViewById(R.id.name);
         mPhoneField = (TextView) findViewById(R.id.phone2);
@@ -51,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
 
-        mBack = (Button) findViewById(R.id.back);
+
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -60,14 +69,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         getUserInfo();
 
-
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                return;
-            }
-        });
 
     }
 
@@ -134,4 +135,29 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
         return;
     }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+
+        if (id== android.R.id.home){
+            finish();
+        }
+
+        if (id== R.id.settings_button){
+            Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     }

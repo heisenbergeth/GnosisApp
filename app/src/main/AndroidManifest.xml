@@ -31,18 +31,19 @@
             android:name=".KhanViewer"
             android:theme="@style/AppTheme2"/>
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"/>
         <activity android:name=".Matches.MatchesActivity" />
         <activity
             android:name=".Chat.ChatActivity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"/>
         <activity
             android:name=".Chat.VideoChatViewActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/FullScreenVideoTheme">
         </activity>
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"/>
         <activity android:name=".ReportModule" />
         <activity android:name=".Requests.RequestInfo"></activity>
     </application>
