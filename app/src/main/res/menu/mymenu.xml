@@ -4,7 +4,7 @@
         android:id="@+id/mybutton"
         android:title=""
         app:showAsAction="always"
-        android:icon="@mipmap/outline_video_call"
+        android:icon="@mipmap/baseline_video_call_white_48"
         />
 
 
@@ -15,6 +15,11 @@
         app:showAsAction="always"
         android:icon="@mipmap/outline_more">
         <menu>
+
+            <item android:id="@+id/account_profile"
+                android:icon="@mipmap/outline_account_circle_black_48"
+                app:showAsAction="ifRoom"
+                android:title="Profile" />
 
             <item android:id="@+id/action_report"
                 android:icon="@mipmap/outline_report_black_48"

@@ -29,6 +29,8 @@ import com.gnosis.app.Cards.arrayAdapter;
 import com.gnosis.app.Cards.cards;
 import com.gnosis.app.Matches.MatchesActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
     private com.gnosis.app.Cards.arrayAdapter arrayAdapter;
-    private int i;
+    private boolean showingFirst = false;
 
     private FirebaseAuth mAuth;
 
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle, mInterest, mInterestTitle;
 
-    private ImageView mProfileImage, info;
+    private ImageView mProfileImage, infologo;
 
     private DatabaseReference usersDb, mUserDatabase;
 
@@ -66,7 +68,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         textView = (TextView) findViewById(R.id.instruction);
-        info= (ImageView) findViewById(R.id.instruction1);
+        infologo= (ImageView) findViewById(R.id.instruction1);
+        textView.setVisibility(View.GONE);
+
+        infologo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(showingFirst == true){
+                    textView.setVisibility(View.GONE);
+                    showingFirst = false;
+                }else{
+                    textView.setVisibility(View.VISIBLE);
+                    showingFirst = true;
+                }
+
+
+            }
+        });
         rowItems = new ArrayList<cards>();
 
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
@@ -82,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
                 textView.setVisibility(View.GONE);
-                info.setVisibility(View.GONE);
+                showingFirst = false;
 
             }
 
@@ -315,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
-                .setCancelable(false)
+            //    .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mAuth.signOut();
@@ -329,6 +347,19 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
+    /*new AlertDialog.Builder(this)
+                    .setTitle("Exit")
+                    .setMessage("Are you sure you want to close Khan Academy Viewer?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();*/
 
 
     public void goToProfile(View view) {

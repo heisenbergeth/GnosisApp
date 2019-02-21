@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText mNameField, mPhoneField, mAbout;
     private Spinner mSchool, mCourse;
 
-    private Button mBack, mConfirm, mInterest;
+    private Button mInterest;
 
     private TextView mItemSelected;
 
@@ -86,7 +88,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings2);
+
+        getSupportActionBar().setTitle("Settings");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mNameField = (EditText) findViewById(R.id.name);
         mPhoneField = (EditText) findViewById(R.id.phone2);
@@ -100,9 +107,6 @@ public class SettingsActivity extends AppCompatActivity {
         mInterest = (Button) findViewById(R.id.select_interest);
 
         mProfileImage = (ImageView) findViewById(R.id.profileImage);
-
-        mBack = (Button) findViewById(R.id.back);
-        mConfirm = (Button) findViewById(R.id.confirm);
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -255,21 +259,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
-        mConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveUserInformation();
 
-            }
-        });
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void checkedItemsBoolean() {
@@ -438,5 +428,29 @@ public class SettingsActivity extends AppCompatActivity {
             resultUri = imageUri;
             mProfileImage.setImageURI(resultUri);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+
+        if (id== android.R.id.home){
+            Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if (id== R.id.save_button){
+            saveUserInformation();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

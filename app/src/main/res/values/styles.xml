@@ -10,37 +10,53 @@
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/primary1</item>
+        <item name="colorPrimaryDark">@color/primary_dark1</item>
+        <item name="colorAccent">@color/black</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/primary1</item>
+        <item name="colorPrimaryDark">@color/primary_dark1</item>
+        <item name="colorAccent">@color/accent1</item>
 
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">@color/windowbackground</item>
 
         <item name="colorControlNormal">@color/iron</item>
         <item name="colorControlActivated">@color/white</item>
         <item name="colorControlHighlight">@color/white</item>
         <item name="android:textColorHint">@color/iron</item>
 
-        <item name="colorButtonNormal">@color/primary_darker</item>
-        <item name="android:colorButtonNormal">@color/primary_darker</item>
+        <item name="colorButtonNormal">@color/primary_darker1</item>
+        <item name="android:colorButtonNormal">@color/primary_darker1</item>
+    </style>
+
+    <style name="AppTheme.Dark.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primary1</item>
+        <item name="colorPrimaryDark">@color/primary_dark1</item>
+        <item name="colorAccent">@color/black</item>
+
+        <item name="android:windowBackground">@color/windowbackground</item>
+
+        <item name="colorControlNormal">@color/iron</item>
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorHint">@color/iron</item>
+
+        <item name="colorButtonNormal">@color/primary_darker1</item>
+        <item name="android:colorButtonNormal">@color/primary_darker1</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">@color/primary_dark</item>
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:background">@color/white</item>
+        <item name="colorAccent">@color/primary_darker1</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/primary_dark1</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog1" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">@color/primary_dark</item>
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:background">@color/aluminum</item>
+        <item name="colorAccent">@color/primary_darker1</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/primary_dark1</item>
     </style>
 
     <style name="FullScreenVideoTheme" parent="AppTheme">
