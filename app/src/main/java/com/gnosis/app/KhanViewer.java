@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -30,6 +31,9 @@ public class KhanViewer extends AppCompatActivity  {
         wv1.setWebViewClient(new MyBrowser());
 
         String url = "https://www.khanacademy.org/";
+
+        wv1.getSettings().setAllowContentAccess(true);
+        wv1.getSettings().setDomStorageEnabled(true);
 
         wv1.getSettings().setLoadsImagesAutomatically(true);
         wv1.getSettings().setJavaScriptEnabled(true);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,9 +27,11 @@ import io.agora.rtc.video.VideoEncoderConfiguration; // 2.3.0 and later
 
 public class VideoChatViewActivity extends AppCompatActivity {
 
-    private String channel;
+    private String channel, name;
 
-    private TextView stats;
+    private TextView contactName, status;
+
+    private CountDownTimer cTimer, dTimer = null;
 
     private static final String LOG_TAG = VideoChatViewActivity.class.getSimpleName();
 
@@ -76,15 +79,20 @@ public class VideoChatViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_chat_view);
 
         channel = getIntent().getExtras().getString("chatId");
-        stats = (TextView) findViewById(R.id.quick_tips_when_use_agora_sdk);
-        stats.setText(channel);
+        name = getIntent().getExtras().getString("name");
+        contactName = (TextView) findViewById(R.id.caller_name);
+        contactName.setText(name);
+        status = (TextView) findViewById(R.id.contacting);
 
 
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
             initAgoraEngineAndJoinChannel();
+            startTimer();
         }
+
+
     }
 
     private void initAgoraEngineAndJoinChannel() {
@@ -180,7 +188,10 @@ public class VideoChatViewActivity extends AppCompatActivity {
         mRtcEngine.switchCamera();
     }
 
-    public void onEncCallClicked(View view) { finish(); }
+    public void onEncCallClicked(View view) {
+        cancelTimer();
+        finish();
+    }
 
     private void initializeAgoraEngine() {
         try {
@@ -213,6 +224,7 @@ public class VideoChatViewActivity extends AppCompatActivity {
         mRtcEngine.joinChannel(null, channel, "Extra Optional Data", 0); // if you do not specify the uid, we will generate the uid for you
     }
 
+    //User accepts the call
     private void setupRemoteVideo(int uid) {
         FrameLayout container = (FrameLayout) findViewById(R.id.remote_video_view_container);
 
@@ -225,20 +237,42 @@ public class VideoChatViewActivity extends AppCompatActivity {
         mRtcEngine.setupRemoteVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid));
 
         surfaceView.setTag(uid); // for mark purpose
-        View tipMsg = findViewById(R.id.quick_tips_when_use_agora_sdk); // optional UI
+        View tipMsg = findViewById(R.id.contacting);
+        View callerName = findViewById(R.id.caller_name);// optional UI
         tipMsg.setVisibility(View.GONE);
+        callerName.setVisibility(View.GONE);
+        cancelTimer();
+        dTimer.cancel();
     }
 
     private void leaveChannel() {
         mRtcEngine.leaveChannel();
     }
 
+
+    //User ended the call, quits in 5 seconds.
     private void onRemoteUserLeft() {
         FrameLayout container = (FrameLayout) findViewById(R.id.remote_video_view_container);
         container.removeAllViews();
 
-        View tipMsg = findViewById(R.id.quick_tips_when_use_agora_sdk); // optional UI
+        View tipMsg = findViewById(R.id.contacting);
+        View callerName = findViewById(R.id.caller_name);// optional UI
+        status.setText(name + " ended the call");
         tipMsg.setVisibility(View.VISIBLE);
+        callerName.setVisibility(View.VISIBLE);
+
+        dTimer= new CountDownTimer(5000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                finish();
+
+            }
+
+        };dTimer.start();
     }
 
     private void onRemoteUserVideoMuted(int uid, boolean muted) {
@@ -250,5 +284,37 @@ public class VideoChatViewActivity extends AppCompatActivity {
         if (tag != null && (Integer) tag == uid) {
             surfaceView.setVisibility(muted ? View.GONE : View.VISIBLE);
         }
+    }
+
+    public void startTimer() {
+        cTimer = new CountDownTimer(30000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+            public void onFinish() {
+                status.setText(name+ " isn't receiving calls right now");
+
+                //User didn't answer the call, quits in 5 seconds.
+                dTimer= new CountDownTimer(5000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    public void onFinish() {
+                        finish();
+
+                    }
+
+                };dTimer.start();
+            }
+        };
+        cTimer.start();
+    }
+
+
+    //cancel timer
+    public void cancelTimer() {
+        if(cTimer!=null)
+            cTimer.cancel();
     }
 }

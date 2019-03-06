@@ -19,8 +19,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ChooseLoginRegistrationActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ChooseLoginRegistrationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,23 +31,31 @@
         </activity>
         <activity
             android:name=".KhanViewer"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".RegistrationActivity" />
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RegistrationActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"/>
-        <activity android:name=".Matches.MatchesActivity" />
+            android:theme="@style/AppTheme.Dark.ActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Matches.MatchesActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Chat.ChatActivity"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Chat.VideoChatViewActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/FullScreenVideoTheme">
         </activity>
         <activity android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"/>
-        <activity android:name=".ReportModule" />
-        <activity android:name=".Requests.RequestInfo"></activity>
+            android:theme="@style/AppTheme.Dark.ActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ReportModule"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Requests.RequestInfo"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
