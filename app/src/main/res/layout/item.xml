@@ -5,10 +5,10 @@
     android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="40sp"
-    android:paddingRight="40sp"
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
     android:paddingTop="20sp"
-    android:paddingBottom="20sp"
+    android:paddingBottom="30sp"
     android:outlineProvider="bounds"
     android:clipToPadding="false">
 
@@ -16,20 +16,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardCornerRadius="4dp"
-        android:elevation="2dp"
+        app:cardCornerRadius="4sp"
+        android:elevation="2sp"
         android:id="@+id/cardView">
         <LinearLayout
             android:layout_gravity="center"
-            android:layout_width="300dp"
-            android:layout_height="350dp"
+            android:layout_width="300sp"
+            android:layout_height="350sp"
             android:orientation="vertical"
             android:background="@color/white">
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="282dp"
+                android:layout_height="282sp"
                 android:gravity="center"
                 android:scaleType="centerCrop" />
 
@@ -49,8 +49,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:paddingLeft="20sp"
+                android:drawablePadding="5sp"
+                android:drawableLeft="@mipmap/baseline_school_black_18"
+
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 tools:text="School" />
 
 
@@ -59,3 +62,4 @@
 
 
 </LinearLayout>
+

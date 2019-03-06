@@ -234,6 +234,7 @@ public class ChatActivity extends AppCompatActivity {
             Intent intent=new Intent(this,VideoChatViewActivity.class);
             Bundle b = new Bundle();
             b.putString("chatId", chatId);
+            b.putString("name", mName);
             intent.putExtras(b);
             startActivity(intent);
 

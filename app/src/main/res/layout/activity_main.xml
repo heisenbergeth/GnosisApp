@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="Profile"
             android:onClick="goToProfile" />
     </LinearLayout>
 
@@ -45,8 +45,8 @@
         <ImageView
             android:layout_width="213dp"
             android:layout_height="58dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="180dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="300sp"
             android:src="@mipmap/outline_android_white_48" />
 
         <ImageView
