@@ -45,6 +45,10 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.onesignal.OneSignal;
+
+
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button mRegister;
@@ -68,6 +72,11 @@ public class RegistrationActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //OneSignal
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -189,6 +198,9 @@ public class RegistrationActivity extends AppCompatActivity {
                                         userInfo.put("school_pos", schoolpos);
                                         userInfo.put("course", course);
                                         userInfo.put("course_pos", coursepos);
+
+                                        //OneSignal
+                                        OneSignal.setEmail(email);
 
                                         currentUserDb.updateChildren(userInfo);
 
