@@ -34,6 +34,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
@@ -79,6 +81,17 @@ public class MainActivity extends AppCompatActivity {
                     showingFirst = false;
                 }else{
                     textView.setVisibility(View.VISIBLE);
+                    Timer t = new Timer(false);
+                    t.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    textView.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
+                    }, 10000);
                     showingFirst = true;
                 }
 
