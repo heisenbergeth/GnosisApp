@@ -1,12 +1,16 @@
 package com.gnosis.app.Matches;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +30,14 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MatchesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView, mRecyclerView1;
     private RecyclerView.Adapter mMatchesAdapter, mRequestsAdapter;
     private RecyclerView.LayoutManager mMatchesLayoutManager, mRequestsLayoutManager;
-    private TextView emptyMatches, emptyReq;
+    private TextView emptyMatches, emptyReq, requestDrawable, infoRequest;
 
 
     private String currentUserID;
@@ -40,6 +46,41 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+
+        getSupportActionBar().setTitle("Matches");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        requestDrawable = (TextView) findViewById(R.id.textView11);
+        infoRequest = (TextView) findViewById(R.id.infoRequest);
+        infoRequest.setVisibility(View.INVISIBLE);
+
+        requestDrawable.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= requestDrawable.getRight() - requestDrawable.getTotalPaddingRight()) {
+                        infoRequest.setVisibility(View.VISIBLE);
+                        Timer t = new Timer(false);
+                        t.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        infoRequest.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                            }
+                        }, 5000);
+
+                        return true;
+                    }
+                }
+                return true;
+            }
+        });
+
 
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -74,6 +115,7 @@ public class MatchesActivity extends AppCompatActivity {
 
 
     }
+
 
     private void getUserMatchId() {
 
@@ -191,6 +233,17 @@ public class MatchesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+
+        if (id== android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private ArrayList<MatchesObject> resultsMatches = new ArrayList<MatchesObject>();

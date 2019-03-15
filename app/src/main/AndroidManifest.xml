@@ -39,6 +39,7 @@
             android:theme="@style/AppTheme.Dark.ActionBar"
             android:screenOrientation="portrait"/>
         <activity android:name=".Matches.MatchesActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".Chat.ChatActivity"

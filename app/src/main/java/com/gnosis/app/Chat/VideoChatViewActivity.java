@@ -242,7 +242,7 @@ public class VideoChatViewActivity extends AppCompatActivity {
         tipMsg.setVisibility(View.GONE);
         callerName.setVisibility(View.GONE);
         cancelTimer();
-        dTimer.cancel();
+        //dTimer.cancel();
     }
 
     private void leaveChannel() {
