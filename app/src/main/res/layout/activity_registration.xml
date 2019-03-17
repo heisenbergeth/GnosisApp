@@ -14,9 +14,11 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="20dp"
         android:paddingLeft="24sp"
-        android:paddingRight="24sp">
+        android:paddingRight="24sp"
+        android:paddingBottom="24sp"
+        android:paddingTop="24sp">
 
         <ImageView android:src="@mipmap/logoedit"
             android:layout_width="wrap_content"

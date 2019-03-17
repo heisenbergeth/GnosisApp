@@ -27,7 +27,6 @@
             android:id="@+id/emptyMatches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal|center_vertical"
             android:text="Matches empty" />
 
@@ -68,7 +67,7 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="Requests"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -81,7 +80,7 @@
             android:layout_marginTop="8dp"
             android:text="This is the users that swiped you right."
             android:textAlignment="center"
-            android:textSize="10dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="parent" />
