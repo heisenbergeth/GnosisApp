@@ -1,5 +1,6 @@
 package com.gnosis.app;
 
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference usersDb, mUserDatabase;
 
+    protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+    protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
+
     ListView listView;
     List<cards> rowItems;
 
@@ -71,32 +76,41 @@ public class MainActivity extends AppCompatActivity {
 
         textView = (TextView) findViewById(R.id.instruction);
         infologo= (ImageView) findViewById(R.id.instruction1);
-        textView.setVisibility(View.GONE);
+        //textView.setVisibility(View.GONE);
+
+
+        textView.startAnimation(fadeIn);
+        textView.startAnimation(fadeOut);
+
+        fadeIn.setDuration(900);
+        fadeIn.setFillAfter(true);
+        fadeOut.setDuration(1200);
+        fadeOut.setFillAfter(true);
+        fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+
+
 
         infologo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(showingFirst == true){
-                    textView.setVisibility(View.GONE);
-                    showingFirst = false;
-                }else{
+                    infologo.setClickable(false);
                     textView.setVisibility(View.VISIBLE);
+                    textView.startAnimation(fadeIn);
+
                     Timer t = new Timer(false);
                     t.schedule(new TimerTask() {
                         @Override
                         public void run() {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    textView.setVisibility(View.INVISIBLE);
+                                    textView.startAnimation(fadeOut);
+                                    infologo.setClickable(true);
                                 }
                             });
                         }
-                    }, 10000);
-                    showingFirst = true;
+                    }, 5000);
                 }
 
-
-            }
         });
         rowItems = new ArrayList<cards>();
 
@@ -112,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("LIST", "removed object!");
                 rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
-                textView.setVisibility(View.GONE);
-                showingFirst = false;
 
             }
 

@@ -1,61 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gnosis.app.Matches.MatchesActivity"
     android:orientation="vertical"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    tools:context="com.gnosis.app.Matches.MatchesActivity"
+    tools:layout_editor_absoluteX="10dp"
+    tools:layout_editor_absoluteY="35dp">
 
     <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/emptyMatches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal|center_vertical|bottom"
-        android:layout_marginBottom="100dp"
-        android:text="Matches empty" />
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="216dp">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scrollbars="vertical">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.NestedScrollView>
-
-</FrameLayout>
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="395dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-        android:id="@+id/textView11"
+            android:id="@+id/emptyMatches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="Matches empty" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.NestedScrollView>
+
+    </FrameLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Requests"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:drawableRight="@mipmap/outline_help_white_18"
-        android:drawablePadding="10dp"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableRight="@mipmap/outline_help_white_18"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="Requests"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/infoRequest"
@@ -73,37 +87,47 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
     </android.support.constraint.ConstraintLayout>
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom">
-    <TextView
-        android:id="@+id/emptyReq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="90dp"
-        android:text="Requests empty" />
+    <FrameLayout
+        android:layout_width="395dp"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:layout_gravity="bottom|end"></android.support.v4.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/emptyReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="Requests empty" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView1"
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end">
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:scrollbars="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView1"
 
-    </android.support.v7.widget.RecyclerView>
-</FrameLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:scrollbars="vertical">
 
-</LinearLayout>
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.NestedScrollView>
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
