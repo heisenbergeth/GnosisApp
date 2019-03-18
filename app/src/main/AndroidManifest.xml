@@ -14,49 +14,62 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gnosis_logo"
         android:label="Gnosis"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logoedit"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChooseLoginRegistrationActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".KhanViewer"
-            android:theme="@style/AppTheme2"
+        <!-- android:launchMode="singleTask" -->
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RegistrationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Matches.MatchesActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".Chat.ChatActivity"
-            android:theme="@style/AppTheme2"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".Chat.VideoChatViewActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/FullScreenVideoTheme">
-        </activity>
-        <activity android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ReportModule"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Requests.RequestInfo"
-            android:screenOrientation="portrait"></activity>
-    </application>
+     <activity android:name=".ChooseLoginRegistrationActivity"
+         android:screenOrientation="portrait">
+         <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+             <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+     </activity>
+     <activity
+         android:name=".KhanViewer"
+         android:theme="@style/AppTheme2"
+         android:screenOrientation="portrait"/>
+     <activity android:name=".RegistrationActivity"
+         android:screenOrientation="portrait"/>
+     <activity android:name=".SettingsActivity"
+         android:theme="@style/AppTheme.Dark.ActionBar"
+         android:screenOrientation="portrait"/>
+     <activity android:name=".Matches.MatchesActivity"
+         android:theme="@style/AppTheme.Dark.ActionBar"
+         android:screenOrientation="portrait"
+         android:launchMode="singleTop"/>
+     <activity
+         android:name=".Chat.ChatActivity"
+         android:theme="@style/AppTheme2"
+         android:screenOrientation="portrait"/>
+     <activity
+         android:name=".Chat.VideoChatViewActivity"
+         android:screenOrientation="sensorPortrait"
+         android:theme="@style/FullScreenVideoTheme">
+     </activity>
+     <activity android:name=".ProfileActivity"
+         android:theme="@style/AppTheme.Dark.ActionBar"
+         android:screenOrientation="portrait"/>
+     <activity android:name=".ReportModule"
+         android:screenOrientation="portrait"/>
+     <activity android:name=".Requests.RequestInfo"
+         android:screenOrientation="portrait"></activity>
+
+     <service
+         android:name=".NotificationExtenderExample"
+         android:permission="android.permission.BIND_JOB_SERVICE"
+         android:exported="false">
+         <intent-filter>
+             <action android:name="com.onesignal.NotificationExtender" />
+         </intent-filter>
+     </service>
+ </application>
 
 </manifest>
