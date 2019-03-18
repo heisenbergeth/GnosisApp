@@ -39,6 +39,8 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mMatchesLayoutManager, mRequestsLayoutManager;
     private TextView emptyMatches, emptyReq, requestDrawable, infoRequest;
 
+    protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+    protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
 
     private String currentUserID;
 
@@ -56,19 +58,26 @@ public class MatchesActivity extends AppCompatActivity {
         infoRequest = (TextView) findViewById(R.id.infoRequest);
         infoRequest.setVisibility(View.INVISIBLE);
 
+        fadeIn.setDuration(900);
+        fadeIn.setFillAfter(true);
+        fadeOut.setDuration(1200);
+        fadeOut.setFillAfter(true);
+        fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+
         requestDrawable.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getRawX() >= requestDrawable.getRight() - requestDrawable.getTotalPaddingRight()) {
                         infoRequest.setVisibility(View.VISIBLE);
+                        infoRequest.startAnimation(fadeIn);
                         Timer t = new Timer(false);
                         t.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 runOnUiThread(new Runnable() {
                                     public void run() {
-                                        infoRequest.setVisibility(View.INVISIBLE);
+                                        infoRequest.startAnimation(fadeOut);
                                     }
                                 });
                             }
