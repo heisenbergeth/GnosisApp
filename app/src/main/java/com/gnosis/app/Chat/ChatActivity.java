@@ -110,6 +110,18 @@ public class ChatActivity extends AppCompatActivity {
         getNotifID();
         getName(); //for current_name
 
+        //ONESIGNAL SEND TAGS
+        JSONObject tags = new JSONObject();
+        try {
+            tags.put("currentUID", currentUserID);
+            tags.put("current_name", current_name);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OneSignal.sendTags(tags);
+        //ONESIGNAL SEND TAGS
+
 
         getChatId();
 
@@ -176,22 +188,6 @@ public class ChatActivity extends AppCompatActivity {
 
             newMessageDb.setValue(newMessage);
 
-            //ONESIGNAL SEND TAGS
-            JSONObject tags = new JSONObject();
-            try {
-                tags.put("matchId", matchId);
-                tags.put("currentUID", currentUserID);
-                tags.put("current_name", current_name);
-                tags.put("match_name", mName);
-                tags.put("message", sendMessageText);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            OneSignal.sendTags(tags);
-            //ONESIGNAL SEND TAGS
-
-
             //ONESIGNAL NOTIFICATION
             OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
             String userID = notif_ID;
@@ -223,7 +219,6 @@ public class ChatActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             //ONESIGNAL NOTIFICATION
 
         }
@@ -513,6 +508,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    //ONESIGNAL
     private class ExampleNotificationReceivedHandler implements OneSignal.NotificationReceivedHandler {
         @Override
         public void notificationReceived(OSNotification notification) {
@@ -543,7 +539,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
         // This fires when a notification is opened by tapping on it.
@@ -590,4 +585,5 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     }
+    //ONESIGNAL
 }

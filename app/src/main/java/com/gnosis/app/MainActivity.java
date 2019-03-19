@@ -136,58 +136,6 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     }, 5000);
-/*
-                OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
-                String userId = status.getSubscriptionStatus().getUserId();
-                boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
-
-                textView.setText("Subscription Status, is subscribed:" + isSubscribed);
-
-                if (!isSubscribed)
-                    return;
-
-                try {
-                    JSONObject notificationContent = new JSONObject("{'contents': {'en': 'The notification message or body'}," +
-                            "'include_player_ids': ['" + userId + "'], " +
-                            "'headings': {'en': 'Notification Title'}, " +
-                            "'big_picture': 'http://i.imgur.com/DKw1J2F.gif'}");
-                    OneSignal.postNotification(notificationContent, null);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
- */
-
-/*
-                OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
-                String userID = status.getSubscriptionStatus().getUserId();
-                boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
-
-                textView.setText("Subscription Status, is subscribed:" + isSubscribed);
-
-                if (!isSubscribed)
-                    return;
-
-                try {
-                    OneSignal.postNotification(new JSONObject("{'contents': {'en':'{{user_name}} is calling you'}, " +
-                                    "'include_player_ids': ['" + userID + "'], " +
-                                    "'headings': {'en': 'Video Call'}, " +
-                                    "'data': {'openURL': 'https://imgur.com'}," +
-                                    "'buttons':[{'id': 'id1', 'text': 'Go to MatchesActivity'}, {'id':'id2', 'text': 'Go to KhanActivity'}]}"),
-                            new OneSignal.PostNotificationResponseHandler() {
-                                @Override
-                                public void onSuccess(JSONObject response) {
-                                    Log.i("OneSignalExample", "postNotification Success: " + response);
-                                }
-
-                                @Override
-                                public void onFailure(JSONObject response) {
-                                    Log.e("OneSignalExample", "postNotification Failure: " + response);
-                                }
-                            });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-*/
 
                 }
 
@@ -452,19 +400,6 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
-    /*new AlertDialog.Builder(this)
-                    .setTitle("Exit")
-                    .setMessage("Are you sure you want to close Khan Academy Viewer?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-
-                    })
-                    .setNegativeButton("No", null)
-                    .show();*/
 
 
     public void goToProfile(View view) {
@@ -486,6 +421,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //ONESIGNAL
     private class ExampleNotificationReceivedHandler implements OneSignal.NotificationReceivedHandler {
         @Override
         public void notificationReceived(OSNotification notification) {
@@ -566,6 +502,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    //ONESIGNAL
 
 
 }
