@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.onesignal.OneSignal;
 
 
 public class ChooseLoginRegistrationActivity extends AppCompatActivity {
@@ -34,6 +35,12 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_login_registration);
+
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
 
         mRegister = (TextView) findViewById(R.id.register);
         mLogin = (Button) findViewById(R.id.login);
@@ -98,6 +105,7 @@ public class ChooseLoginRegistrationActivity extends AppCompatActivity {
 
                         }
                     });
+                OneSignal.setEmail(email);
                 mLogin.setEnabled(true);
             }
         });

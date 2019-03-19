@@ -39,6 +39,14 @@ import com.gnosis.app.Matches.MatchesActivity;
 import com.gnosis.app.Matches.MatchesAdapter;
 import com.gnosis.app.Matches.MatchesObject;
 import com.gnosis.app.R;
+import com.onesignal.OSNotification;
+import com.onesignal.OSNotificationAction;
+import com.onesignal.OSNotificationOpenResult;
+import com.onesignal.OSPermissionSubscriptionState;
+import com.onesignal.OneSignal;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,11 +64,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button mSendButton;
 
-    private String currentUserID, matchId, chatId, mName;
+    private String currentUserID, matchId, chatId, mName, notif_ID, sendMessageText;
 
     private FirebaseAuth mAuth;
 
-    private String currentUId, name, profileImageUrl, school, course,about, interest;
+    private String currentUId, name, profileImageUrl, school, course,about, interest, current_name;
 
     private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle, mInterest, mInterestTitle;
 
@@ -68,12 +76,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private DatabaseReference usersDb, mUserDatabase;
 
-    DatabaseReference mDatabaseUser, mDatabaseChat;
+    DatabaseReference mDatabaseUser, mDatabaseChat, mDatabaseUser1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         mName = getIntent().getExtras().getString("name");
+        matchId = getIntent().getExtras().getString("matchId");
 
         getSupportActionBar().setTitle(mName);
 
@@ -82,15 +91,37 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-
-
-        matchId = getIntent().getExtras().getString("matchId");
+        OneSignal.startInit(this)
+                .setNotificationReceivedHandler(new ChatActivity.ExampleNotificationReceivedHandler())
+                .setNotificationOpenedHandler(new ChatActivity.ExampleNotificationOpenedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches").child(matchId).child("ChatId");
         mDatabaseChat = FirebaseDatabase.getInstance().getReference().child("Chat");
+        usersDb= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+
+        mDatabaseUser1 = FirebaseDatabase.getInstance().getReference().child("Users").child(matchId);
+
+        getNotifID();
+        getName(); //for current_name
+
+        //ONESIGNAL SEND TAGS
+        JSONObject tags = new JSONObject();
+        try {
+            tags.put("currentUID", currentUserID);
+            tags.put("current_name", current_name);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OneSignal.sendTags(tags);
+        //ONESIGNAL SEND TAGS
+
 
         getChatId();
 
@@ -146,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        String sendMessageText = mSendEditText.getText().toString();
+            sendMessageText = mSendEditText.getText().toString();
 
         if(!sendMessageText.isEmpty()){
             DatabaseReference newMessageDb = mDatabaseChat.push();
@@ -156,6 +187,40 @@ public class ChatActivity extends AppCompatActivity {
             newMessage.put("text", sendMessageText);
 
             newMessageDb.setValue(newMessage);
+
+            //ONESIGNAL NOTIFICATION
+            OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
+            String userID = notif_ID;
+            String username = current_name;
+
+            boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
+
+
+            if (!isSubscribed)
+                return;
+
+            try {
+               OneSignal.postNotification(new JSONObject("{'contents': {'en': \""+ username + ": " +sendMessageText + "\"}, " +
+                                "'include_player_ids': ['" + userID + "'], " +
+                                "'headings': {'en': 'New Message'}, " +
+                                "'data': {'userID': \""+ currentUserID + "\", 'name': \""+ current_name + "\"}," +
+                                "'buttons': [{'id': 'id1', 'text': 'Open Gnosis Chat'}]}"),
+                        new OneSignal.PostNotificationResponseHandler() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                Log.i("OneSignalExample", "postNotification Success: " + response);
+                            }
+
+                            @Override
+                            public void onFailure(JSONObject response) {
+                                Log.e("OneSignalExample", "postNotification Failure: " + response);
+                            }
+                        });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //ONESIGNAL NOTIFICATION
+
         }
         mSendEditText.setText(null);
     }
@@ -201,6 +266,13 @@ public class ChatActivity extends AppCompatActivity {
                         ChatObject newMessage = new ChatObject(message, currentUserBoolean);
                         resultsChat.add(newMessage);
                         mChatAdapter.notifyDataSetChanged();
+
+                        nestedScrollView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                            }
+                        },1000);
                     }
                 }
 
@@ -388,4 +460,130 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatObject> getDataSetChat() {
         return resultsChat;
     }
+
+    private void getNotifID() {
+        mDatabaseUser1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if (map.get("notif_ID") != null) {
+                        notif_ID = map.get("notif_ID").toString();
+                    }
+                    else{
+                        //For debug
+                        Toast.makeText(ChatActivity.this, "No Notification ID found for this person.", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void getName() {
+        usersDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if (map.get("name") != null) {
+                        current_name = map.get("name").toString();
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    //ONESIGNAL
+    private class ExampleNotificationReceivedHandler implements OneSignal.NotificationReceivedHandler {
+        @Override
+        public void notificationReceived(OSNotification notification) {
+            JSONObject data = notification.payload.additionalData;
+            String notificationID = notification.payload.notificationID;
+            String title = notification.payload.title;
+            String body = notification.payload.body;
+            String smallIcon = notification.payload.smallIcon;
+            String largeIcon = notification.payload.largeIcon;
+            String bigPicture = notification.payload.bigPicture;
+            String smallIconAccentColor = notification.payload.smallIconAccentColor;
+            String sound = notification.payload.sound;
+            String ledColor = notification.payload.ledColor;
+            int lockScreenVisibility = notification.payload.lockScreenVisibility;
+            String groupKey = notification.payload.groupKey;
+            String groupMessage = notification.payload.groupMessage;
+            String fromProjectNumber = notification.payload.fromProjectNumber;
+            String rawPayload = notification.payload.rawPayload;
+
+            String customKey;
+
+            Log.i("OneSignalExample", "NotificationID received: " + notificationID);
+
+            if (data != null) {
+                customKey = data.optString("customkey", null);
+                if (customKey != null)
+                    Log.i("OneSignalExample", "customkey set with value: " + customKey);
+            }
+        }
+    }
+
+    private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+        // This fires when a notification is opened by tapping on it.
+        @Override
+        public void notificationOpened(OSNotificationOpenResult result) {
+            OSNotificationAction.ActionType actionType = result.action.type;
+            JSONObject data = result.notification.payload.additionalData;
+            String launchUrl = result.notification.payload.launchURL; // update docs launchUrl
+
+            String userID= null;
+            String name= null;
+            Object activityToLaunch = MainActivity.class;
+
+            if (data != null) {
+                name = data.optString("name", null);
+                userID = data.optString("userID", null);
+
+                if (name != null)
+                    Log.i("OneSignalExample", "name set with value: " + name);
+
+                if (userID != null)
+                    Log.i("OneSignalExample", "userID set with value: " + userID);
+            }
+
+            if (actionType == OSNotificationAction.ActionType.ActionTaken) {
+                Log.i("OneSignalExample", "Button pressed with id: " + result.action.actionID);
+
+                if (result.action.actionID.equals("id1")) {
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+                    activityToLaunch = ChatActivity.class;
+                }
+                else
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+            }
+
+            Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("matchId", userID);
+            intent.putExtra("name", name);
+            Log.i("OneSignalExampleChat", "name = " + name);
+            Log.i("OneSignalExample", "matchId = " + userID);
+            startActivity(intent);
+
+
+        }
+    }
+    //ONESIGNAL
 }

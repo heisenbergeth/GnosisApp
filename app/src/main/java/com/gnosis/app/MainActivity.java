@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import android.view.Window;
 
 import com.bumptech.glide.Glide;
+import com.gnosis.app.Chat.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -30,10 +33,18 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.gnosis.app.Cards.arrayAdapter;
 import com.gnosis.app.Cards.cards;
 import com.gnosis.app.Matches.MatchesActivity;
+import com.onesignal.OSNotification;
+import com.onesignal.OSNotificationAction;
+import com.onesignal.OSNotificationOpenResult;
+import com.onesignal.OSPermissionSubscriptionState;
+import com.onesignal.OneSignal;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -52,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView mProfileImage, infologo;
 
-    private DatabaseReference usersDb, mUserDatabase;
+    private DatabaseReference usersDb, mUserDatabase, mUserDatabase1;
 
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
     protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
@@ -70,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUId = mAuth.getCurrentUser().getUid();
+        mUserDatabase1 = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUId);
+
 
         checkUserType();
 
@@ -87,6 +100,20 @@ public class MainActivity extends AppCompatActivity {
         fadeOut.setDuration(1200);
         fadeOut.setFillAfter(true);
         fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+
+
+        //ONESIGNAL SAVE USER_ID TO DATABASE
+        OneSignal.startInit(this)
+                .setNotificationReceivedHandler(new MainActivity.ExampleNotificationReceivedHandler())
+                .setNotificationOpenedHandler(new MainActivity.ExampleNotificationOpenedHandler())
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
+        String notif_userId = status.getSubscriptionStatus().getUserId();
+        mUserDatabase1.child("notif_ID").setValue(notif_userId);
+        //ONESIGNAL SAVE USER_ID TO DATABASE
 
 
 
@@ -109,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     }, 5000);
+
                 }
 
         });
@@ -372,19 +400,6 @@ public class MainActivity extends AppCompatActivity {
                 .show();
 
     }
-    /*new AlertDialog.Builder(this)
-                    .setTitle("Exit")
-                    .setMessage("Are you sure you want to close Khan Academy Viewer?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-
-                    })
-                    .setNegativeButton("No", null)
-                    .show();*/
 
 
     public void goToProfile(View view) {
@@ -405,6 +420,89 @@ public class MainActivity extends AppCompatActivity {
         return;
 
     }
+
+    //ONESIGNAL
+    private class ExampleNotificationReceivedHandler implements OneSignal.NotificationReceivedHandler {
+        @Override
+        public void notificationReceived(OSNotification notification) {
+            JSONObject data = notification.payload.additionalData;
+            String notificationID = notification.payload.notificationID;
+            String title = notification.payload.title;
+            String body = notification.payload.body;
+            String smallIcon = notification.payload.smallIcon;
+            String largeIcon = notification.payload.largeIcon;
+            String bigPicture = notification.payload.bigPicture;
+            String smallIconAccentColor = notification.payload.smallIconAccentColor;
+            String sound = notification.payload.sound;
+            String ledColor = notification.payload.ledColor;
+            int lockScreenVisibility = notification.payload.lockScreenVisibility;
+            String groupKey = notification.payload.groupKey;
+            String groupMessage = notification.payload.groupMessage;
+            String fromProjectNumber = notification.payload.fromProjectNumber;
+            String rawPayload = notification.payload.rawPayload;
+
+            String customKey;
+
+            Log.i("OneSignalExample", "NotificationID received: " + notificationID);
+
+            if (data != null) {
+                customKey = data.optString("customkey", null);
+                if (customKey != null)
+                    Log.i("OneSignalExample", "customkey set with value: " + customKey);
+            }
+        }
+    }
+
+
+    private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+        // This fires when a notification is opened by tapping on it.
+        @Override
+        public void notificationOpened(OSNotificationOpenResult result) {
+            OSNotificationAction.ActionType actionType = result.action.type;
+            JSONObject data = result.notification.payload.additionalData;
+            String launchUrl = result.notification.payload.launchURL; // update docs launchUrl
+
+            String userID= null;
+            String name= null;
+            Object activityToLaunch = MainActivity.class;
+
+            if (data != null) {
+                name = data.optString("name", null);
+                userID = data.optString("userID", null);
+
+                if (name != null)
+                    Log.i("OneSignalExample", "name set with value: " + name);
+
+                if (userID != null)
+                    Log.i("OneSignalExample", "userID set with value: " + userID);
+            }
+
+            if (actionType == OSNotificationAction.ActionType.ActionTaken) {
+                Log.i("OneSignalExample", "Button pressed with id: " + result.action.actionID);
+
+                if (result.action.actionID.equals("id1")) {
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+                    activityToLaunch = ChatActivity.class;
+                }
+                else
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+            }
+
+            Intent intent1 = new Intent(getApplicationContext(), (Class<?>) MainActivity.class);
+            startActivity(intent1);
+
+            Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
+            intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+            intent.putExtra("matchId", userID);
+            intent.putExtra("name", name);
+            Log.i("OneSignalExampleMain", "name = " + name);
+            Log.i("OneSignalExample", "matchId = " + userID);
+            startActivity(intent);
+
+
+        }
+    }
+    //ONESIGNAL
 
 
 }
