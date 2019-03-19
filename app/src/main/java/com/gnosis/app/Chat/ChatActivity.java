@@ -196,9 +196,6 @@ public class ChatActivity extends AppCompatActivity {
             OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
             String userID = notif_ID;
             String username = current_name;
-            //String userID = status.getSubscriptionStatus().getUserId();
-            Toast.makeText(ChatActivity.this, "Notification ID found for me. " +userID+ ", " +username, Toast.LENGTH_SHORT).show();
-
 
             boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
 
@@ -207,23 +204,10 @@ public class ChatActivity extends AppCompatActivity {
                 return;
 
             try {
-
-                /*
-               OneSignal.postNotification(new JSONObject("{'contents': {'en':'{{current_name}}: {{message}}'}, " +
-                "'include_player_ids': ['" + userID + "'], " +
-                "'headings': {'en': 'New Message'}, " +
-                "'data': [{'name': '{{current_name}}'}, {'userID': '{{currentUID}}'}]" +
-                "'buttons':[{'id': 'id1', 'text': 'Read'}, {'id':'id2', 'text': 'Dismiss'}]}"),
-*/
-
-                //OneSignal.postNotification(new JSONObject("{'contents': ['en': " +  yourVariable + "], 'include_player_ids': ['" + selectedUser.getOneSignalId() + "']}"),
-                //OneSignal.postNotification(new JSONObject("{'contents': {'en': \""+ current_name +" wants you to follow them." +"\"}, 'include_player_ids': ['" + selectedUser.getOneSignalId() + "']}"),
-                //
                OneSignal.postNotification(new JSONObject("{'contents': {'en': \""+ username + ": " +sendMessageText + "\"}, " +
                                 "'include_player_ids': ['" + userID + "'], " +
                                 "'headings': {'en': 'New Message'}, " +
-                                "'data': {'name': \""+ username + "\"}," +
-                                "'data': {'userID': \""+ currentUserID + "\"}," +
+                                "'data': {'userID': \""+ currentUserID + "\", 'name': \""+ current_name + "\"}," +
                                 "'buttons': [{'id': 'id1', 'text': 'Open Gnosis Chat'}]}"),
                         new OneSignal.PostNotificationResponseHandler() {
                             @Override
@@ -287,6 +271,13 @@ public class ChatActivity extends AppCompatActivity {
                         ChatObject newMessage = new ChatObject(message, currentUserBoolean);
                         resultsChat.add(newMessage);
                         mChatAdapter.notifyDataSetChanged();
+
+                        nestedScrollView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                            }
+                        },1000);
                     }
                 }
 
@@ -483,8 +474,6 @@ public class ChatActivity extends AppCompatActivity {
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
                     if (map.get("notif_ID") != null) {
                         notif_ID = map.get("notif_ID").toString();
-                        Toast.makeText(ChatActivity.this, "Notification ID found for this person. " +notif_ID, Toast.LENGTH_SHORT).show();
-
                     }
                     else{
                         //For debug
@@ -594,7 +583,7 @@ public class ChatActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("matchId", userID);
             intent.putExtra("name", name);
-            Log.i("OneSignalExample", "name = " + name);
+            Log.i("OneSignalExampleChat", "name = " + name);
             Log.i("OneSignalExample", "matchId = " + userID);
             startActivity(intent);
 

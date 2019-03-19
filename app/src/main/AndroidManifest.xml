@@ -14,13 +14,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/gnosis_logo"
+        android:icon="@mipmap/gnosis_ic_launcher_white"
         android:label="Gnosis"
-        android:roundIcon="@mipmap/logoedit"
+        android:roundIcon="@mipmap/gnosis_ic_launcher_white_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
 
-        <!-- android:launchMode="singleTask" -->
+        <!--<meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" /> -->
+
+
         <activity android:name=".MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
@@ -44,14 +46,16 @@
      <activity android:name=".Matches.MatchesActivity"
          android:theme="@style/AppTheme.Dark.ActionBar"
          android:screenOrientation="portrait"
-         android:launchMode="singleTop"/>
+         android:launchMode="singleTask"/>
      <activity
          android:name=".Chat.ChatActivity"
          android:theme="@style/AppTheme2"
-         android:screenOrientation="portrait"/>
+         android:screenOrientation="portrait"
+         android:launchMode="singleTask" />
      <activity
          android:name=".Chat.VideoChatViewActivity"
          android:screenOrientation="sensorPortrait"
+         android:launchMode="singleTop"
          android:theme="@style/FullScreenVideoTheme">
      </activity>
      <activity android:name=".ProfileActivity"

@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
         OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
         String notif_userId = status.getSubscriptionStatus().getUserId();
         mUserDatabase1.child("notif_ID").setValue(notif_userId);
-
-        //for debug
-        Toast.makeText(MainActivity.this, "Notif ID: " +notif_userId + " added to database", Toast.LENGTH_SHORT).show();
         //ONESIGNAL SAVE USER_ID TO DATABASE
 
 
@@ -555,11 +552,14 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("OneSignalExample", "button id called: " + result.action.actionID);
             }
 
+            Intent intent1 = new Intent(getApplicationContext(), (Class<?>) MainActivity.class);
+            startActivity(intent1);
+
             Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
             intent.putExtra("matchId", userID);
             intent.putExtra("name", name);
-            Log.i("OneSignalExample", "name = " + name);
+            Log.i("OneSignalExampleMain", "name = " + name);
             Log.i("OneSignalExample", "matchId = " + userID);
             startActivity(intent);
 
