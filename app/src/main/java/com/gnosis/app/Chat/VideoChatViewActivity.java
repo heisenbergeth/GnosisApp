@@ -261,7 +261,7 @@ public class VideoChatViewActivity extends AppCompatActivity {
         tipMsg.setVisibility(View.VISIBLE);
         callerName.setVisibility(View.VISIBLE);
 
-        dTimer= new CountDownTimer(5000, 1000) {
+        dTimer= new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
@@ -287,14 +287,14 @@ public class VideoChatViewActivity extends AppCompatActivity {
     }
 
     public void startTimer() {
-        cTimer = new CountDownTimer(30000, 1000) {
+        cTimer = new CountDownTimer(50000, 1000) {
             public void onTick(long millisUntilFinished) {
             }
             public void onFinish() {
                 status.setText(name+ " isn't receiving calls right now");
 
                 //User didn't answer the call, quits in 5 seconds.
-                dTimer= new CountDownTimer(5000, 1000) {
+                dTimer= new CountDownTimer(10000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
 
