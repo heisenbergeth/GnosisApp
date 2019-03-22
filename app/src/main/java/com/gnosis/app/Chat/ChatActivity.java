@@ -303,6 +303,33 @@ public class ChatActivity extends AppCompatActivity {
 
         //send chatId data to videoChatActivity
         if (id == R.id.mybutton) {
+            //ONESIGNAL NOTIFICATION
+            OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
+            String userID = notif_ID;
+            String username = current_name;
+
+            try {
+                OneSignal.postNotification(new JSONObject("{'contents': {'en': \""+ username + " is calling you  \"}, " +
+                                "'include_player_ids': ['" + userID + "'], " +
+                                "'headings': {'en': 'Video Chat'}, " +
+                                "'data': {'chatId': \""+ chatId + "\", 'name': \""+ current_name + "\"}," +
+                                "'buttons': [{'id': 'id2', 'text': 'Open Gnosis Video Chat'}]}"),
+                        new OneSignal.PostNotificationResponseHandler() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                Log.i("OneSignalExample", "postNotification Success: " + response);
+                            }
+
+                            @Override
+                            public void onFailure(JSONObject response) {
+                                Log.e("OneSignalExample", "postNotification Failure: " + response);
+                            }
+                        });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //ONESIGNAL NOTIFICATION
+
             Intent intent=new Intent(this,VideoChatViewActivity.class);
             Bundle b = new Bundle();
             b.putString("chatId", chatId);

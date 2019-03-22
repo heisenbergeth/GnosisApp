@@ -21,6 +21,7 @@ import android.view.Window;
 
 import com.bumptech.glide.Glide;
 import com.gnosis.app.Chat.ChatActivity;
+import com.gnosis.app.Chat.VideoChatViewActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -57,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private String currentUId, name, profileImageUrl, school, course,about, interest;
+    private String currentUId, name, profileImageUrl, school, course,about, interest, notif_userId, notif_ID;
 
     private TextView textView, mNameField, mSchool, mCourse, mAbout, mAboutTitle, mInterest, mInterestTitle;
 
     private ImageView mProfileImage, infologo;
 
-    private DatabaseReference usersDb, mUserDatabase, mUserDatabase1;
+    private DatabaseReference usersDb, mUserDatabase, mUserDatabase1, mDatabaseUser1;
 
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
     protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUId = mAuth.getCurrentUser().getUid();
         mUserDatabase1 = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUId);
+
 
 
         checkUserType();
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 .init();
 
         OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
-        String notif_userId = status.getSubscriptionStatus().getUserId();
+        notif_userId = status.getSubscriptionStatus().getUserId();
         mUserDatabase1.child("notif_ID").setValue(notif_userId);
         //ONESIGNAL SAVE USER_ID TO DATABASE
 
@@ -287,9 +289,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void isConnectionMatch(String userId) {
+    private void isConnectionMatch(final String userId) {
         //check kung nasa yep ka din niya
         DatabaseReference currentUserConnectionsDb = usersDb.child(currentUId).child("connections").child("yeps").child(userId);
+        mDatabaseUser1 = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        mDatabaseUser1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if (map.get("notif_ID") != null) {
+                        notif_ID = map.get("notif_ID").toString();
+                    }
+                    else{
+                        //For debug
+                        Toast.makeText(MainActivity.this, "No Notification ID found for this person.", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -297,6 +321,40 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "You have been connected to someone! To view, click Matches.", Toast.LENGTH_LONG).show();
 
                     String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+
+                    //ONESIGNAL NOTIFICATION
+                    OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
+                    String userID = notif_userId;
+                    String matchID = notif_ID;
+
+                    boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
+
+
+                    if (!isSubscribed)
+                        return;
+
+                    try {
+                        OneSignal.postNotification(new JSONObject("{'contents': {'en': 'You have been connected to someone! To view, click Matches.'}, " +
+                                        "'include_player_ids': ['" + userID + "', '" + matchID +"'], " +
+                                        "'headings': {'en': 'New Match'}, " +
+                                        "'data': {'userID': \""+ notif_userId + "\"}," +
+                                        "'buttons': [{'id': 'id3', 'text': 'Open Matches'}]}"),
+                                new OneSignal.PostNotificationResponseHandler() {
+                                    @Override
+                                    public void onSuccess(JSONObject response) {
+                                        Log.i("OneSignalExample", "postNotification Success: " + response);
+                                    }
+
+                                    @Override
+                                    public void onFailure(JSONObject response) {
+                                        Log.e("OneSignalExample", "postNotification Failure: " + response);
+                                    }
+                                });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //ONESIGNAL NOTIFICATION
+
 
 
                     //add chatID to db
@@ -421,6 +479,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     //ONESIGNAL
     private class ExampleNotificationReceivedHandler implements OneSignal.NotificationReceivedHandler {
         @Override
@@ -464,17 +523,22 @@ public class MainActivity extends AppCompatActivity {
 
             String userID= null;
             String name= null;
+            String chatId= null;
             Object activityToLaunch = MainActivity.class;
 
             if (data != null) {
                 name = data.optString("name", null);
                 userID = data.optString("userID", null);
+                chatId = data.optString("chatId", null);
 
                 if (name != null)
                     Log.i("OneSignalExample", "name set with value: " + name);
 
                 if (userID != null)
                     Log.i("OneSignalExample", "userID set with value: " + userID);
+
+                if (chatId != null)
+                    Log.i("OneSignalExample", "chatId set with value: " + chatId);
             }
 
             if (actionType == OSNotificationAction.ActionType.ActionTaken) {
@@ -483,6 +547,14 @@ public class MainActivity extends AppCompatActivity {
                 if (result.action.actionID.equals("id1")) {
                     Log.i("OneSignalExample", "button id called: " + result.action.actionID);
                     activityToLaunch = ChatActivity.class;
+                }
+                if (result.action.actionID.equals("id2")) {
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+                    activityToLaunch = VideoChatViewActivity.class;
+                }
+                if (result.action.actionID.equals("id3")) {
+                    Log.i("OneSignalExample", "button id called: " + result.action.actionID);
+                    activityToLaunch = MatchesActivity.class;
                 }
                 else
                     Log.i("OneSignalExample", "button id called: " + result.action.actionID);
@@ -494,8 +566,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
             intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
             intent.putExtra("matchId", userID);
+            intent.putExtra("chatId", chatId);
             intent.putExtra("name", name);
             Log.i("OneSignalExampleMain", "name = " + name);
+            Log.i("OneSignalExampleMain", "chatId = " + chatId);
             Log.i("OneSignalExample", "matchId = " + userID);
             startActivity(intent);
 
